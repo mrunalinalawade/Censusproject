@@ -235,25 +235,7 @@ const Form1 = (props) => {
           )}
         </View>
 
-        {/* <Buttons
-          Label1="Back"
-          Label2="Next"
-          // Action1={() => props.setReportModalVisible(false)}
-          Action2={() => props.navigation.navigate('Form2')}
-          ExternalStyle={{
-            width: width * 0.42,
-            alignSelf: 'center',
-
-          }}
-          ExternalStyle1={{
-            width: width * 0.42,
-            alignSelf: 'center',
-          }}
-          styles={{ width: WIDTH * 0.89, }}
-          linearGradient3={{
-            paddingVertical: 11,
-          }}
-        /> */}
+       
 
         <SideButton Label={'Next'} Action={() => props.navigation.navigate('Form2')} styles={{ width: WIDTH * 0.45 }} />
 

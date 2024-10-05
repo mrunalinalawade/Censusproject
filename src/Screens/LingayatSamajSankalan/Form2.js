@@ -74,7 +74,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         setAddress(text);
                         if (text.trim() === '') {
-                            setAddressError('First name is required.');
+                            setAddressError('Address Line 1 is required.');
                         } else {
                             setAddressError('');
                         }
@@ -88,7 +88,7 @@ const Form2 = (props) => {
                     <Text style={styles.starStyle}>*</Text>
                 </Text>
                 <Inputfield
-                    placeholder={'Address Line 2'}
+                    placeholder={'Enter Address Line 2'}
                     MaxLength={256}
                     value={Address1}
                     onBlur={() => {
@@ -102,7 +102,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         setAddress1(text);
                         if (text.trim() === '') {
-                            setAddress1Error('Middle name is required.');
+                            setAddress1Error('Address Line 2 is required.');
                         } else {
                             // Replace with appropriate validation if needed
                             setAddress1Error('');
@@ -130,7 +130,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         setCity(text);
                         if (text.trim() === '') {
-                            setCityError('Surname is required.');
+                            setCityError('City Or Village is required.');
                         } else {
                             // Replace with appropriate validation if needed
                             setCityError('');
@@ -160,7 +160,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         setTaluka(text);
                         if (text.trim() === '') {
-                            setTalukaError('Surname is required.');
+                            setTalukaError('Taluka is required.');
                         } else {
 
                             setTalukaError('');
@@ -191,7 +191,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         setDistrict(text);
                         if (text.trim() === '') {
-                            setDistrictError('Surname is required.');
+                            setDistrictError('District is required.');
                         } else {
                             // Replace with appropriate validation if needed
                             setDistrictError('');
@@ -221,7 +221,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         setState(text);
                         if (text.trim() === '') {
-                            setStateError('Surname is required.');
+                            setStateError('State is required.');
                         } else {
                             // Replace with appropriate validation if needed
                             setStateError('');
@@ -237,8 +237,10 @@ const Form2 = (props) => {
                 </Text>
                 <Inputfield
                     placeholder={'Pincode'}
-                    MaxLength={256}
+                    MaxLength={6}
+                    
                     value={Pincode}
+                    
                     onBlur={() => {
                         if (Pincode.trim() !== '') {
                             setShowError((prevState) => ({
@@ -250,7 +252,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         setPincode(text);
                         if (text.trim() === '') {
-                            setPincodeError('Surname is required.');
+                            setPincodeError('Pincode is required.');
                         } else {
                           
                             setPincodeError('');

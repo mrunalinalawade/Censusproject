@@ -72,7 +72,7 @@ const Form4 = (props) => {
                     onChangeText={(text) => {
                         setMobile(text);
                         if (text.trim() === '') {
-                            setMobileError('First name is required.');
+                            setMobileError('Mobile is required.');
                         } else {
 
                             setMobileError('');
@@ -101,7 +101,7 @@ const Form4 = (props) => {
                     onChangeText={(text) => {
                         setMobile1(text);
                         if (text.trim() === '') {
-                            setMobile1Error('Middle name is required.');
+                            setMobile1Error('Whatsapp Mobile is required.');
                         } else {
 
                             setMobile1Error('');
@@ -156,7 +156,7 @@ const Form4 = (props) => {
                     onChangeText={(text) => {
                         setMale(text);
                         if (text.trim() === '') {
-                            setMaleError('Surname is required.');
+                            setMaleError('Nos. Of Family Members(Male) is required.');
                         } else {
 
                             setMaleError('');
@@ -186,7 +186,7 @@ const Form4 = (props) => {
                     onChangeText={(text) => {
                         setFemale(text);
                         if (text.trim() === '') {
-                            setFemaleError('Surname is required.');
+                            setFemaleError('Nos. Of Family Members(female) is required.');
                         } else {
 
                             setFemaleError('');

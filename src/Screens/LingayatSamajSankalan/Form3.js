@@ -85,7 +85,7 @@ const Form3 = (props) => {
           onChangeText={(text) => {
             setemployer(text);
             if (text.trim() === '') {
-              setemployerError('First name is required.');
+              setemployerError('Name Of the firm or employer is required.');
             } else {
               // Assuming ValidateEmail is not appropriate for name validation
               // Replace with appropriate validation if needed
@@ -115,7 +115,7 @@ const Form3 = (props) => {
           onChangeText={(text) => {
             setorganisation(text);
             if (text.trim() === '') {
-              setorganisationError('Middle name is required.');
+              setorganisationError('Your designation @ organisation is required.');
             } else {
               
               setorganisationError('');
