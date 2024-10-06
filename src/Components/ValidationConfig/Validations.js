@@ -103,16 +103,88 @@ export const ValidateFullname = (fullname) => {
   }
 };
 
+export const ValidateMiddlename = (mname) => {
+  if (mname !== '') {
+    if (mname.length >= 2 && name_REGEX.test(mname)) {
+      return '';
+    } else {
+      if (mname.length < 2) {
+        return ErrorMessages.mnameError;
+      } else {
+        return ErrorMessages.mnameError1;
+      }
+    }
+  } else {
+    return ErrorMessages.mnameEmpty;
+  }
+};
+export const ValidateSurname = (sname) => {
+  if (sname !== '') {
+    if (sname.length >= 2 && name_REGEX.test(sname)) {
+      return '';
+    } else {
+      if (sname.length < 2) {
+        return ErrorMessages.snameError;
+      } else {
+        return ErrorMessages.snameError1;
+      }
+    }
+  } else {
+    return ErrorMessages.snameEmpty;
+  }
+};
+// export const OTPVerification = (Code) => {
+//   const codeStr = Code.toString();
+//   if (codeStr !== '') {
+//     if (codeStr.length !== 6) {
+//       return ErrorMessages.CodeLengthError;
+//     } else {
+//       return '';
+//     }
+//   } else {
+//     return ErrorMessages.CodeEmpty;
+//   }
+// };
 export const OTPVerification = (Code) => {
+  // Check if Code is null or undefined
+  if (Code == null) {
+    return ErrorMessages.CodeEmpty;  // Return an appropriate error message
+  }
+
   const codeStr = Code.toString();
+
+  // Check if the code string is not empty
   if (codeStr !== '') {
+    // Check if the length of the code is exactly 6
     if (codeStr.length !== 6) {
       return ErrorMessages.CodeLengthError;
     } else {
-      return '';
+      return '';  // No error if the length is correct
     }
   } else {
-    return ErrorMessages.CodeEmpty;
+    return ErrorMessages.CodeEmpty;  // Handle empty code scenario
+  }
+};
+
+
+export const NoFamily = (Code1) => {
+  // Check if Code is null or undefined
+  if (Code1 == null) {
+    return ErrorMessages.CodeEmpty;  // Return an appropriate error message
+  }
+
+  const code1Str = Code1.toString();
+
+  // Check if the code string is not empty
+  if (code1Str !== '') {
+    // Check if the length of the code is exactly 6
+    if (code1Str.length !== 2) {
+      return ErrorMessages.Code1LengthError;
+    } else {
+      return '';  // No error if the length is correct
+    }
+  } else {
+    return ErrorMessages.Code1Empty;  // Handle empty code scenario
   }
 };
 
@@ -130,13 +202,23 @@ export const ValidateMobileNo = (MobileNumber) => {
   }
 };
 
+// export const ValidateCityField = (city) => {
+//   if (city !== undefined && city.length >= 3 && city.length <= 50) {
+//     return '';
+//   } else {
+//     return ErrorMessages.CityLengthInvalid;
+//   }
+// };
+
 export const ValidateCityField = (city) => {
-  if (city !== undefined && city.length >= 3 && city.length <= 50) {
-    return '';
+  // Check if city is a non-empty string and its length is between 3 and 50
+  if (typeof city === 'string' && city.length >= 3 && city.length <= 50) {
+    return '';  // No error
   } else {
-    return ErrorMessages.CityLengthInvalid;
+    return ErrorMessages.CityLengthInvalid;  // Return error message
   }
 };
+
 
 export const ValidateAddCategory = (Category) => {
   if (Category !== '' && Category !== null && Category !== undefined) {

@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 15,
     fontFamily: FONTS.semibold,
-    color: COLORS.WHITE,
+    color:'#1C57A5',
     paddingVertical: '2%',
   },
   placeholderStyle: {

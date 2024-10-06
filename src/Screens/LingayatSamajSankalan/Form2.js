@@ -12,6 +12,7 @@ const { height, width } = Dimensions.get('window');
 import COLORS from '../../assets/colors/Colors';
 import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
+import { OTPVerification, ValidateCityField } from '../../Components/ValidationConfig/Validations';
 
 
 const Form2 = (props) => {
@@ -33,13 +34,50 @@ const Form2 = (props) => {
         AddressError: false,
         Address1Error: false,
         CityError: false,
-        TalukaError:false,
-        DistrictError:false,
-        StateError:false,
-        PincodeError:false,
+        TalukaError: false,
+        DistrictError: false,
+        StateError: false,
+        PincodeError: false,
     });
 
 
+
+    const Form2com = () => {
+        let addressError = ValidateCityField(Address);
+        // let address1Err=ValidateCityField(Address1);
+        let cityErr = ValidateCityField(City);
+        let address1Err = ValidateCityField(Address1);
+        let takukaError = ValidateCityField(Taluka);
+        let districtError = ValidateCityField(District)
+        let stateError = ValidateCityField(State);
+        let pincodeError = OTPVerification(Pincode)
+
+
+
+        if (addressError == '' && cityErr == '' && address1Err == "" && takukaError == "" && districtError == "" && stateError == "" && pincodeError == "") {
+
+            props.navigation.navigate('Form3')
+        } else {
+            setAddressError(addressError);
+            setAddress1Error(address1Err);
+            setCityError(cityErr);
+            setTalukaError(address1Err);
+            setTalukaError(takukaError);
+            setDistrictError(districtError)
+            setStateError(stateError)
+            setPincodeError(pincodeError)
+            setShowError({
+                AddressError: true,
+                Address1Error: true,
+                CityError: true,
+                TalukaError: true,
+                DistrictError: true,
+                StateError: true,
+                PincodeError: true,
+            });
+        }
+
+    }
 
 
 
@@ -72,11 +110,9 @@ const Form2 = (props) => {
                         }
                     }}
                     onChangeText={(text) => {
-                        setAddress(text);
-                        if (text.trim() === '') {
-                            setAddressError('Address Line 1 is required.');
-                        } else {
-                            setAddressError('');
+                        if (Address != '' || Address != undefined) {
+                            setAddress(text);
+                            setAddressError(ValidateCityField(text));
                         }
                     }}
                     ShowError={ShowError.AddressError}
@@ -92,7 +128,7 @@ const Form2 = (props) => {
                     MaxLength={256}
                     value={Address1}
                     onBlur={() => {
-                        if (Address1.trim() !== '') {
+                        if (Address1 != '' || Address1 != undefined) {
                             setShowError((prevState) => ({
                                 ...prevState,
                                 Address1Error: true,
@@ -100,12 +136,9 @@ const Form2 = (props) => {
                         }
                     }}
                     onChangeText={(text) => {
-                        setAddress1(text);
-                        if (text.trim() === '') {
-                            setAddress1Error('Address Line 2 is required.');
-                        } else {
-                            // Replace with appropriate validation if needed
-                            setAddress1Error('');
+                        if (Address1 != '' || Address1 != undefined) {
+                            setAddress1(text);
+                            setAddress1Error(ValidateCityField(text));
                         }
                     }}
                     ShowError={ShowError.Address1Error}
@@ -119,8 +152,9 @@ const Form2 = (props) => {
                     placeholder={'Enter City Or Village'}
                     MaxLength={256}
                     value={City}
+
                     onBlur={() => {
-                        if (City.trim() !== '') {
+                        if (City != '' || City != undefined) {
                             setShowError((prevState) => ({
                                 ...prevState,
                                 CityError: true,
@@ -128,12 +162,9 @@ const Form2 = (props) => {
                         }
                     }}
                     onChangeText={(text) => {
-                        setCity(text);
-                        if (text.trim() === '') {
-                            setCityError('City Or Village is required.');
-                        } else {
-                            // Replace with appropriate validation if needed
-                            setCityError('');
+                        if (City != '' || City != undefined) {
+                            setCity(text);
+                            setCityError(ValidateCityField(text));
                         }
                     }}
                     ShowError={ShowError.CityError}
@@ -149,8 +180,9 @@ const Form2 = (props) => {
                     placeholder={'Taluka'}
                     MaxLength={256}
                     value={Taluka}
+
                     onBlur={() => {
-                        if (Taluka.trim() !== '') {
+                        if (Taluka != '' || Taluka != undefined) {
                             setShowError((prevState) => ({
                                 ...prevState,
                                 TalukaError: true,
@@ -158,12 +190,9 @@ const Form2 = (props) => {
                         }
                     }}
                     onChangeText={(text) => {
-                        setTaluka(text);
-                        if (text.trim() === '') {
-                            setTalukaError('Taluka is required.');
-                        } else {
-
-                            setTalukaError('');
+                        if (Taluka != '' || Taluka != undefined) {
+                            setTaluka(text);
+                            setTalukaError(ValidateCityField(text));
                         }
                     }}
                     ShowError={ShowError.TalukaError}
@@ -180,8 +209,10 @@ const Form2 = (props) => {
                     placeholder={'District'}
                     MaxLength={256}
                     value={District}
+
+
                     onBlur={() => {
-                        if (District.trim() !== '') {
+                        if (District != '' || District != undefined) {
                             setShowError((prevState) => ({
                                 ...prevState,
                                 DistrictError: true,
@@ -189,14 +220,12 @@ const Form2 = (props) => {
                         }
                     }}
                     onChangeText={(text) => {
-                        setDistrict(text);
-                        if (text.trim() === '') {
-                            setDistrictError('District is required.');
-                        } else {
-                            // Replace with appropriate validation if needed
-                            setDistrictError('');
+                        if (District != '' || District != undefined) {
+                            setDistrict(text);
+                            setDistrictError(ValidateCityField(text));
                         }
                     }}
+
                     ShowError={ShowError.DistrictError}
                     Error={DistrictError}
                 />
@@ -211,7 +240,7 @@ const Form2 = (props) => {
                     MaxLength={256}
                     value={State}
                     onBlur={() => {
-                        if (State.trim() !== '') {
+                        if (State != '' || State != undefined) {
                             setShowError((prevState) => ({
                                 ...prevState,
                                 StateError: true,
@@ -219,12 +248,9 @@ const Form2 = (props) => {
                         }
                     }}
                     onChangeText={(text) => {
-                        setState(text);
-                        if (text.trim() === '') {
-                            setStateError('State is required.');
-                        } else {
-                            // Replace with appropriate validation if needed
-                            setStateError('');
+                        if (State != '' || State != undefined) {
+                            setState(text);
+                            setStateError(ValidateCityField(text));
                         }
                     }}
                     ShowError={ShowError.StateError}
@@ -238,11 +264,12 @@ const Form2 = (props) => {
                 <Inputfield
                     placeholder={'Pincode'}
                     MaxLength={6}
-                    
+  keyboardType="number-pad"
                     value={Pincode}
-                    
+
+
                     onBlur={() => {
-                        if (Pincode.trim() !== '') {
+                        if (Pincode != '' || Pincode != undefined) {
                             setShowError((prevState) => ({
                                 ...prevState,
                                 PincodeError: true,
@@ -250,12 +277,9 @@ const Form2 = (props) => {
                         }
                     }}
                     onChangeText={(text) => {
-                        setPincode(text);
-                        if (text.trim() === '') {
-                            setPincodeError('Pincode is required.');
-                        } else {
-                          
-                            setPincodeError('');
+                        if (Pincode != '' || Pincode != undefined) {
+                            setPincode(text);
+                            setPincodeError(OTPVerification(text));
                         }
                     }}
                     ShowError={ShowError.PincodeError}
@@ -266,7 +290,7 @@ const Form2 = (props) => {
                     Label1="Back"
                     Label2="Next"
                     Action1={() => props.navigation.goBack()}
-                    Action2={() => props.navigation.navigate('Form3')}
+                    Action2={Form2com}
                     ExternalStyle={{
                         width: width * 0.42,
                         alignSelf: 'center',

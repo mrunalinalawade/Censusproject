@@ -24,6 +24,7 @@ const Inputfield = (props) => {
   const { LabelStyle, ContainerStyle } = styles;
 
   return (
+    <>
     <View style={[ContainerStyle, props.ContainerStyle]}>
       <View
         style={
@@ -75,10 +76,12 @@ const Inputfield = (props) => {
           </TouchableOpacity>
         ) : null}
       </View>
+    
+    </View>
       {props.Error && props.ShowError && (
         <Text style={[styles.Errorstyle, props.Errorstyle]}>{props.Error}</Text>
       )}
-    </View>
+      </>
   );
 };
 
@@ -128,7 +131,7 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 13,
     fontFamily: FONTS.regular,
-    marginTop: 2,
+    // marginTop: 1,
     fontWeight: '400',
     paddingLeft: 7,
   },

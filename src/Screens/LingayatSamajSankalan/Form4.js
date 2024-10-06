@@ -17,11 +17,12 @@ import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
 
 import WholeButton from '../../Components/WholeButton';
-import { ValidateEmail } from '../../Components/ValidationConfig/Validations';
+import { NoFamily, ValidateEmail, ValidateMobileNo } from '../../Components/ValidationConfig/Validations';
 
 const Form4 = (props) => {
-    const [Mobile, setMobile] = useState('');
-    const [MobileError, setMobileError] = useState('');
+    
+    const [phone, setPhone] = useState('');
+    const [phoneError, setPhoneError] = useState('');
     const [Mobile1, setMobile1] = useState('');
     const [Mobile1Error, setMobile1Error] = useState('');
     const [Male, setMale] = useState('');
@@ -34,13 +35,48 @@ const Form4 = (props) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     const [ShowError, setShowError] = useState({
-        MobileError: false,
+        phoneError: false,
         Mobile1Error: false,
         MaleError: false,
-        EmailError:false,
-        FemaleError:false
+        EmailError: false,
+        FemaleError: false
     });
 
+
+   
+
+    const Form4 = () => {
+        let mobileError = ValidateMobileNo(phone);
+        let mobile1Err = ValidateMobileNo(Mobile1);
+        let maleErr = NoFamily(Male);
+        let emailError = ValidateEmail(Email);
+        let femaleError = NoFamily(Female);
+    
+        // Check if all validations pass
+        if (mobileError === '' && mobile1Err === '' && maleErr === "" && emailError === "" && femaleError === "") {
+            // Show success alert message
+            Alert.alert('Success', 'Your application was submitted successfully');
+        } else {
+            // Set error messages in the state
+            setPhoneError(mobileError);
+            setMobile1Error(mobile1Err);
+            setMaleError(maleErr);
+            setEmailError(emailError);
+            setFemaleError(femaleError);
+    
+            setShowError({
+                Mobile1Error: true,
+                phoneError: true,
+                MaleError: true,
+                EmailError: true,
+                FemaleError: true
+            });
+    
+            // Show alert for validation errors
+            Alert.alert('Error', 'Please fix the validation errors before submitting');
+        }
+    };
+    
 
 
 
@@ -57,7 +93,7 @@ const Form4 = (props) => {
                 <Text style={styles.firstname}>
                     Mobile-1
                 </Text>
-                <Inputfield
+                {/* <Inputfield
                     placeholder={'Enter Mobile'}
                     MaxLength={256}
                     value={Mobile}
@@ -80,6 +116,31 @@ const Form4 = (props) => {
                     }}
                     ShowError={ShowError.MobileError}
                     Error={MobileError}
+                /> */}
+
+                <Inputfield
+                    // edit={EmailEdit}
+                    placeholder={'Enter Mobile'}
+                    MaxLength={12}
+                    value={phone}
+                    keyboardType="number-pad"
+                    onBlur={() => {
+                        if (phone != '' || phone != undefined) {
+                            setShowError(prevState => ({
+                                ...prevState,
+                                phoneerror: true,
+                            }));
+                        }
+                    }}
+                    onChangeText={(num) => {
+                        if (phone != '' || phone != undefined) {
+                            setPhone(num);
+                            setPhoneError(ValidateMobileNo(num));
+                        }
+                    }}
+                    ShowError={ShowError.phoneerror}
+                    Error={phoneError}
+                    style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
                 />
 
                 <Text style={styles.firstname}>
@@ -88,28 +149,28 @@ const Form4 = (props) => {
                 </Text>
                 <Inputfield
                     placeholder={'Enter Whatsapp Mobile'}
-                    MaxLength={256}
+                    MaxLength={12}
+                    keyboardType="number-pad"
                     value={Mobile1}
                     onBlur={() => {
-                        if (Mobile1.trim() !== '') {
+                        if (Mobile1 != '' || Mobile1 != undefined) {
                             setShowError((prevState) => ({
                                 ...prevState,
                                 Mobile1Error: true,
                             }));
                         }
                     }}
-                    onChangeText={(text) => {
-                        setMobile1(text);
-                        if (text.trim() === '') {
-                            setMobile1Error('Whatsapp Mobile is required.');
-                        } else {
-
-                            setMobile1Error('');
+                    onChangeText={(num) => {
+                        if (Mobile1 != '' || Mobile1 != undefined) {
+                            setMobile1(num);
+                            setMobile1Error(ValidateMobileNo(num));
                         }
                     }}
                     ShowError={ShowError.Mobile1Error}
                     Error={Mobile1Error}
+                    style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
                 />
+
 
                 <Text style={styles.firstname}>
                     Email Address
@@ -122,7 +183,7 @@ const Form4 = (props) => {
                         if (Email != '' || Email != undefined) {
                             setShowError(prevState => ({
                                 ...prevState,
-                                emailError: true,
+                                EmailError: true,
                             }));
                         }
                     }}
@@ -132,7 +193,7 @@ const Form4 = (props) => {
                             setEmailError(ValidateEmail(text));
                         }
                     }}
-                    ShowError={ShowError.emailError}
+                    ShowError={ShowError.EmailError}
                     Error={EmailError}
                 />
 
@@ -143,23 +204,21 @@ const Form4 = (props) => {
                 </Text>
                 <Inputfield
                     placeholder={'Enter Nos. Of Family Members(Male)'}
-                    MaxLength={256}
+                    MaxLength={2}
                     value={Male}
+               keyboardType="number-pad"
                     onBlur={() => {
-                        if (Male.trim() !== '') {
-                            setShowError((prevState) => ({
+                        if (Male != '' || Male != undefined) {
+                            setShowError(prevState => ({
                                 ...prevState,
                                 MaleError: true,
                             }));
                         }
                     }}
                     onChangeText={(text) => {
-                        setMale(text);
-                        if (text.trim() === '') {
-                            setMaleError('Nos. Of Family Members(Male) is required.');
-                        } else {
-
-                            setMaleError('');
+                        if (Male != '' || Male != undefined) {
+                            setMale(text);
+                            setMaleError(NoFamily(text));
                         }
                     }}
                     ShowError={ShowError.MaleError}
@@ -173,30 +232,29 @@ const Form4 = (props) => {
 
                 <Inputfield
                     placeholder={'Enter Nos. Of Family Members (Female)'}
-                    MaxLength={256}
+                    MaxLength={2}
                     value={Female}
+                     keyboardType="number-pad"
+               
                     onBlur={() => {
-                        if (Female.trim() !== '') {
-                            setShowError((prevState) => ({
+                        if (Female != '' || Female != undefined) {
+                            setShowError(prevState => ({
                                 ...prevState,
                                 FemaleError: true,
                             }));
                         }
                     }}
                     onChangeText={(text) => {
-                        setFemale(text);
-                        if (text.trim() === '') {
-                            setFemaleError('Nos. Of Family Members(female) is required.');
-                        } else {
-
-                            setFemaleError('');
+                        if (Female != '' || Female != undefined) {
+                            setFemale(text);
+                            setFemaleError(NoFamily(text));
                         }
                     }}
                     ShowError={ShowError.FemaleError}
                     Error={FemaleError}
                 />
 
-                <WholeButton Label={'Submit'} Action={() => Alert.alert('Your application submitted successfully')} styles={{ width: WIDTH * 0.9 }} />
+                <WholeButton Label={'Submit'} Action={Form4} styles={{ width: WIDTH * 0.9 }} />
 
 
             </View>

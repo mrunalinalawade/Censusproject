@@ -16,6 +16,7 @@ import SubcastDropdown from '../../Components/SubcastDropdown';
 import { VECTOR_ICONS } from '../../assets/Theme';
 import moment from 'moment';
 import SideButton from '../../Components/SideButton';
+import { ValidateFullname, ValidateMiddlename, ValidateSurname } from '../../Components/ValidationConfig/Validations';
 
 const Form1 = (props) => {
   const [FName, setFName] = useState('');
@@ -33,21 +34,22 @@ const Form1 = (props) => {
   const [dateSelected, setDateSelected] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [date100YearsAgo, setDate100YearsAgo] = useState(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 100))
-  );
+    new Date(new Date().setFullYear(new Date().getFullYear() - 100)));
   const [date18YearsAgo, setDate18YearsAgo] = useState(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 18))
-  );
+    new Date(new Date().setFullYear(new Date().getFullYear() - 89)));
   const [ShowError, setShowError] = useState({
     FNameError: false,
     MNameError: false,
     SNameError: false,
-    GenderError:false,
-    SubcastError:false,
+    GenderError: false,
+    SubcastError: false,
+    errorMessage:false
   });
 
 
 
+  const minDate = new Date("1945-1-1");
+  const maxDate = new Date('2045-1-1');
   const isValidDate = (Date_) => {
     const selectedDate = Date_ || minDate;
     setErrorMessage('');
@@ -69,9 +71,39 @@ const Form1 = (props) => {
   };
 
 
+  const Form1com = () => {
+    let fnameError = ValidateFullname(FName);
+    let mnameError = ValidateFullname(MName);
+    let snameError = ValidateFullname(SName);
+    let dateError = isValidDate(birthDate)
+
+    if (fnameError == '' && mnameError == '' && snameError == "" && Subcast !== null && Gender !== null && dateError !== null) {
+
+      props.navigation.navigate('Form2')
+
+    } else {
+      setFNameError(fnameError);
+      setMNameError(mnameError);
+      setSNameError(snameError);
+      setSubcastError('Please select a Subcast')
+      setGenderError('Please select a gender')
+      setErrorMessage('Please select birth date')
+      setShowError({
+        FNameError: true,
+        MNameError: true,
+        SNameError: true,
+        GenderError: true,
+        SubcastError: true,
+        errorMessage:true
+      });
+    }
+
+  }
+
+
   return (
     <KeyboardAwareScrollView
-      style={{ flex: 1, alignSelf: 'center' }}
+      style={{ flex: 1, alignSelf: 'center',marginBottom:'2%' }}
       showsVerticalScrollIndicator={false} >
       <View style={styles.viewStyle}>
         <View style={styles.headerContainer}>
@@ -87,21 +119,20 @@ const Form1 = (props) => {
           placeholder={'Enter First Name'}
           MaxLength={256}
           value={FName}
+       
+
           onBlur={() => {
-            if (FName.trim() !== '') {
-              setShowError((prevState) => ({
+            if (FName != '' || FName != undefined) {
+              setShowError(prevState => ({
                 ...prevState,
                 FNameError: true,
               }));
             }
           }}
           onChangeText={(text) => {
-            setFName(text);
-            if (text.trim() === '') {
-              setFNameError('First name is required.');
-            } else {
-
-              setFNameError('');
+            if (FName != '' || FName != undefined) {
+              setFName(text);
+              setFNameError(ValidateFullname(text));
             }
           }}
           ShowError={ShowError.FNameError}
@@ -117,7 +148,7 @@ const Form1 = (props) => {
           MaxLength={256}
           value={MName}
           onBlur={() => {
-            if (MName.trim() !== '') {
+            if (MName != '' || MName != undefined) {
               setShowError((prevState) => ({
                 ...prevState,
                 MNameError: true,
@@ -125,12 +156,11 @@ const Form1 = (props) => {
             }
           }}
           onChangeText={(text) => {
-            setMName(text);
-            if (text.trim() === '') {
-              setMNameError('Middle name is required.');
-            } else {
-              setMNameError('');
+            if (MName != '' || MName != undefined) {
+              setMName(text);
+              setMNameError(ValidateMiddlename(text));
             }
+
           }}
           ShowError={ShowError.MNameError}
           Error={MNameError}
@@ -152,12 +182,15 @@ const Form1 = (props) => {
             }
           }}
           onChangeText={(text) => {
-            setSName(text);
-            if (text.trim() === '') {
-              setSNameError('Surname is required.');
-            } else {
-              setSNameError('');
+
+
+            if (SName != '' || SName != undefined) {
+              setSName(text);
+              setSNameError(ValidateSurname(text));
             }
+
+
+
           }}
           ShowError={ShowError.SNameError}
           Error={SNameError}
@@ -235,9 +268,9 @@ const Form1 = (props) => {
           )}
         </View>
 
-       
 
-        <SideButton Label={'Next'} Action={() => props.navigation.navigate('Form2')} styles={{ width: WIDTH * 0.45 }} />
+
+        <SideButton Label={'Next'} Action={Form1com} styles={{ width: WIDTH * 0.45 }} />
 
 
       </View>

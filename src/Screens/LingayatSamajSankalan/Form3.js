@@ -15,6 +15,8 @@ import COLORS from '../../assets/colors/Colors';
 import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
 import GenderDropDown from '../../Components/GenderDropDown';
+import { ValidateFullname } from '../../Components/ValidationConfig/Validations';
+import BusinessandServiceDropdown from '../../Components/BusinessandServiceDropdown';
 
 
 
@@ -36,7 +38,31 @@ const Form3 = (props) => {
 
 
 
-  
+  const Form3com = () => {
+    let employError = ValidateFullname(employer);
+    let organisationErr = ValidateFullname(organisation);
+   
+
+
+
+    if (employError == '' && organisationErr == '' && Business !== null ) {
+      props.navigation.navigate('Form4')
+
+    } else {
+      setemployerError(employError);
+      setorganisationError(organisationErr);
+      setBusinessError("Please select a Business or Service");
+
+      setShowError({
+        employerError: true,
+        organisationError: true,
+        BusinessError: true,
+      });
+    }
+
+  }
+
+
 
 
   return (
@@ -49,14 +75,14 @@ const Form3 = (props) => {
         <View style={styles.headerContainer}>
           <Text style={styles.headStyle}>Occupation Details</Text>
         </View>
-      
+
 
         <Text style={styles.firstname}>
-        Business Or Service
-        <Text style={styles.starStyle}>*</Text>
+          Business Or Service
+          <Text style={styles.starStyle}>*</Text>
         </Text>
         <View style={{ marginTop: '3.3%' }}>
-          <GenderDropDown
+          <BusinessandServiceDropdown
             setBusiness={setBusiness}
             Business={Business}
             setBusinessError={setBusinessError}
@@ -67,15 +93,17 @@ const Form3 = (props) => {
         </View>
 
         <Text style={styles.firstname}>
-        Name Of the firm or employer
-        <Text style={styles.starStyle}>*</Text>
+          Name Of the firm or employer
+          <Text style={styles.starStyle}>*</Text>
         </Text>
         <Inputfield
           placeholder={'Enter Name Of the firm or employer'}
           MaxLength={256}
           value={employer}
+
+
           onBlur={() => {
-            if (employer.trim() !== '') {
+            if (employer != '' || employer != undefined) {
               setShowError((prevState) => ({
                 ...prevState,
                 employerError: true,
@@ -83,13 +111,9 @@ const Form3 = (props) => {
             }
           }}
           onChangeText={(text) => {
-            setemployer(text);
-            if (text.trim() === '') {
-              setemployerError('Name Of the firm or employer is required.');
-            } else {
-              // Assuming ValidateEmail is not appropriate for name validation
-              // Replace with appropriate validation if needed
-              setemployerError('');
+            if (employer != '' || employer != undefined) {
+              setemployer(text);
+              setemployerError(ValidateFullname(text));
             }
           }}
           ShowError={ShowError.employerError}
@@ -97,30 +121,29 @@ const Form3 = (props) => {
         />
 
         <Text style={styles.firstname}>
-        Your designation @ organisation
+          Your designation @ organisation
           <Text style={styles.starStyle}>*</Text>
         </Text>
         <Inputfield
           placeholder={'Enter Your designation @ organisation'}
           MaxLength={256}
           value={organisation}
+
           onBlur={() => {
-            if (organisation.trim() !== '') {
-              setShowError((prevState) => ({
+            if (organisation != '' || organisation != undefined) {
+              setShowError(prevState => ({
                 ...prevState,
-                organisationError: true,
+                fullNmError: true,
               }));
             }
           }}
           onChangeText={(text) => {
-            setorganisation(text);
-            if (text.trim() === '') {
-              setorganisationError('Your designation @ organisation is required.');
-            } else {
-              
-              setorganisationError('');
+            if (organisation != '' || organisation != undefined) {
+              setorganisation(text);
+              setorganisationError(ValidateFullname(text));
             }
           }}
+
           ShowError={ShowError.organisationError}
           Error={organisationError}
         />
@@ -129,7 +152,7 @@ const Form3 = (props) => {
           Label1="Back"
           Label2="Next"
           Action1={() => props.navigation.goBack()}
-          Action2={() => props.navigation.navigate('Form4')}
+          Action2={Form3com}
           ExternalStyle={{
             width: width * 0.42,
             alignSelf: 'center',
