@@ -103,6 +103,39 @@ export const ValidateFullname = (fullname) => {
   }
 };
 
+export const ValidateFirmemployername = (firm) => {
+  if (firm !== '') {
+    if (firm.length >= 2 && name_REGEX.test(firm)) {
+      return '';
+    } else {
+      if (firm.length < 2) {
+        return ErrorMessages.firmError;
+      } else {
+        return ErrorMessages.firmError1;
+      }
+    }
+  } else {
+    return ErrorMessages.firmEmpty;
+  }
+};
+
+export const ValidateDesignation = (design) => {
+  if (design !== '') {
+    if (design.length >= 2 && name_REGEX.test(design)) {
+      return '';
+    } else {
+      if (design.length < 2) {
+        return ErrorMessages.designError;
+      } else {
+        return ErrorMessages.designError1;
+      }
+    }
+  } else {
+    return ErrorMessages.designEmpty;
+  }
+};
+
+
 export const ValidateMiddlename = (mname) => {
   if (mname !== '') {
     if (mname.length >= 2 && name_REGEX.test(mname)) {
@@ -178,7 +211,7 @@ export const NoFamily = (Code1) => {
   // Check if the code string is not empty
   if (code1Str !== '') {
     // Check if the length of the code is exactly 6
-    if (code1Str.length !== 2) {
+    if (code1Str.length >= 3) {
       return ErrorMessages.Code1LengthError;
     } else {
       return '';  // No error if the length is correct
@@ -219,7 +252,49 @@ export const ValidateCityField = (city) => {
   }
 };
 
+export const ValidateaddressField = (address) => {
+  // Check if city is a non-empty string and its length is between 3 and 50
+  if (typeof address === 'string' && address.length >= 3 && address.length <= 100) {
+    return '';  // No error
+  } else {
+    return ErrorMessages.AddressLengthInvalid;  // Return error message
+  }
+};
 
+export const Validateaddress1Field = (address1) => {
+  // Check if city is a non-empty string and its length is between 3 and 50
+  if (typeof address1 === 'string' && address1.length >= 3 && address1.length <= 100) {
+    return '';  // No error
+  } else {
+    return ErrorMessages.address1LengthInvalid;  // Return error message
+  }
+};
+
+
+export const ValidatetalukaField = (taluka) => {
+  // Check if city is a non-empty string and its length is between 3 and 50
+  if (typeof taluka === 'string' && taluka.length >= 3 && taluka.length <= 50) {
+    return '';  // No error
+  } else {
+    return ErrorMessages.talukaLengthInvalid;  // Return error message
+  }
+};
+export const ValidatedistrictField = (district) => {
+  // Check if city is a non-empty string and its length is between 3 and 50
+  if (typeof district === 'string' && district.length >= 3 && district.length <= 50) {
+    return '';  // No error
+  } else {
+    return ErrorMessages.districtLengthInvalid;  // Return error message
+  }
+};
+export const ValidatestateField = (state) => {
+  // Check if city is a non-empty string and its length is between 3 and 50
+  if (typeof state === 'string' && state.length >= 3 && state.length <= 50) {
+    return '';  // No error
+  } else {
+    return ErrorMessages.stateLengthInvalid;  // Return error message
+  }
+};
 export const ValidateAddCategory = (Category) => {
   if (Category !== '' && Category !== null && Category !== undefined) {
     return '';

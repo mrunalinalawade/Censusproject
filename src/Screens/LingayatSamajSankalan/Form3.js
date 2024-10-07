@@ -15,7 +15,7 @@ import COLORS from '../../assets/colors/Colors';
 import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
 import GenderDropDown from '../../Components/GenderDropDown';
-import { ValidateFullname } from '../../Components/ValidationConfig/Validations';
+import { ValidateDesignation, ValidateFirmemployername, ValidateFullname } from '../../Components/ValidationConfig/Validations';
 import BusinessandServiceDropdown from '../../Components/BusinessandServiceDropdown';
 
 
@@ -39,8 +39,8 @@ const Form3 = (props) => {
 
 
   const Form3com = () => {
-    let employError = ValidateFullname(employer);
-    let organisationErr = ValidateFullname(organisation);
+    let employError = ValidateFirmemployername(employer);
+    let organisationErr = ValidateDesignation(organisation);
    
 
 
@@ -113,7 +113,7 @@ const Form3 = (props) => {
           onChangeText={(text) => {
             if (employer != '' || employer != undefined) {
               setemployer(text);
-              setemployerError(ValidateFullname(text));
+              setemployerError(ValidateFirmemployername(text));
             }
           }}
           ShowError={ShowError.employerError}
@@ -140,7 +140,7 @@ const Form3 = (props) => {
           onChangeText={(text) => {
             if (organisation != '' || organisation != undefined) {
               setorganisation(text);
-              setorganisationError(ValidateFullname(text));
+              setorganisationError(ValidateDesignation(text));
             }
           }}
 

@@ -12,7 +12,7 @@ const { height, width } = Dimensions.get('window');
 import COLORS from '../../assets/colors/Colors';
 import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
-import { OTPVerification, ValidateCityField } from '../../Components/ValidationConfig/Validations';
+import { OTPVerification, Validateaddress1Field, ValidateaddressField, ValidateCityField, ValidatedistrictField, ValidatestateField, ValidatetalukaField } from '../../Components/ValidationConfig/Validations';
 
 
 const Form2 = (props) => {
@@ -43,13 +43,13 @@ const Form2 = (props) => {
 
 
     const Form2com = () => {
-        let addressError = ValidateCityField(Address);
+        let addressError = ValidateaddressField(Address);
         // let address1Err=ValidateCityField(Address1);
         let cityErr = ValidateCityField(City);
-        let address1Err = ValidateCityField(Address1);
-        let takukaError = ValidateCityField(Taluka);
-        let districtError = ValidateCityField(District)
-        let stateError = ValidateCityField(State);
+        let address1Err = Validateaddress1Field(Address1);
+        let takukaError = ValidatetalukaField(Taluka);
+        let districtError = ValidatedistrictField(District)
+        let stateError = ValidatestateField(State);
         let pincodeError = OTPVerification(Pincode)
 
 
@@ -94,7 +94,7 @@ const Form2 = (props) => {
 
 
 
-                <Text style={styles.firstname}>
+                <Text style={[styles.firstname,{marginTop:'2%'}]}>
                     Address Line 1<Text style={styles.starStyle}>*</Text>
                 </Text>
                 <Inputfield
@@ -112,7 +112,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         if (Address != '' || Address != undefined) {
                             setAddress(text);
-                            setAddressError(ValidateCityField(text));
+                            setAddressError(ValidateaddressField(text));
                         }
                     }}
                     ShowError={ShowError.AddressError}
@@ -138,7 +138,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         if (Address1 != '' || Address1 != undefined) {
                             setAddress1(text);
-                            setAddress1Error(ValidateCityField(text));
+                            setAddress1Error(Validateaddress1Field(text));
                         }
                     }}
                     ShowError={ShowError.Address1Error}
@@ -192,7 +192,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         if (Taluka != '' || Taluka != undefined) {
                             setTaluka(text);
-                            setTalukaError(ValidateCityField(text));
+                            setTalukaError(ValidatetalukaField(text));
                         }
                     }}
                     ShowError={ShowError.TalukaError}
@@ -222,7 +222,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         if (District != '' || District != undefined) {
                             setDistrict(text);
-                            setDistrictError(ValidateCityField(text));
+                            setDistrictError(ValidatedistrictField(text));
                         }
                     }}
 
@@ -250,7 +250,7 @@ const Form2 = (props) => {
                     onChangeText={(text) => {
                         if (State != '' || State != undefined) {
                             setState(text);
-                            setStateError(ValidateCityField(text));
+                            setStateError(ValidatestateField(text));
                         }
                     }}
                     ShowError={ShowError.StateError}
@@ -264,7 +264,7 @@ const Form2 = (props) => {
                 <Inputfield
                     placeholder={'Pincode'}
                     MaxLength={6}
-  keyboardType="number-pad"
+                    keyboardType="number-pad"
                     value={Pincode}
 
 

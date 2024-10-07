@@ -73,8 +73,8 @@ const Form1 = (props) => {
 
   const Form1com = () => {
     let fnameError = ValidateFullname(FName);
-    let mnameError = ValidateFullname(MName);
-    let snameError = ValidateFullname(SName);
+    let mnameError = ValidateMiddlename(MName);
+    let snameError = ValidateSurname(SName);
     let dateError = isValidDate(birthDate)
 
     if (fnameError == '' && mnameError == '' && snameError == "" && Subcast !== null && Gender !== null && dateError !== null) {
@@ -112,7 +112,7 @@ const Form1 = (props) => {
         <View style={styles.subHeaderContainer}>
           <Text style={styles.typename}>Type name of family head</Text>
         </View>
-        <Text style={styles.firstname}>
+        <Text style={[styles.firstname,{marginTop:'2%'}]}>
           First Name<Text style={styles.starStyle}>*</Text>
         </Text>
         <Inputfield

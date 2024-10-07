@@ -138,7 +138,7 @@ const Form4 = (props) => {
                             setPhoneError(ValidateMobileNo(num));
                         }
                     }}
-                    ShowError={ShowError.phoneerror}
+                    ShowError={ShowError.phoneError}
                     Error={phoneError}
                     style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
                 />
