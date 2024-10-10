@@ -363,7 +363,7 @@ const Form4 = (props) => {
                     Error={FemaleError}
                 />
                 <TouchableOpacity onPress={() => setShowInputField1(!showInputField1)}  style={{ alignItems: 'flex-end' }}><Text style={styles.firstname1}>Add Details</Text></TouchableOpacity>
-                {showInputField && (
+                {showInputField1 && (
                     <>
                   
                 <Inputfield

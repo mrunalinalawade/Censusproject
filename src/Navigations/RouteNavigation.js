@@ -10,7 +10,7 @@ const RouteNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName="Form4">
+      initialRouteName="Form1">
       {/* -----------------------Splash----------------------------- */}
       <Stack.Screen name="Form1" component={Form1} />
       <Stack.Screen name="Form2" component={Form2} />
