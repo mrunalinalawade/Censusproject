@@ -23,16 +23,20 @@ const styles = StyleSheet.create({
         marginVertical: '4%',
         paddingVertical: '4.5%',
         borderRadius: 8,
-        backgroundColor: '#1C57A5'
+        backgroundColor: '#1C57A5',
+         alignItems:'center',
+         justifyContent:'center'
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: 19,
         color: '#fff',
         textAlign: 'center',
         fontFamily: FONTS.semibold,
+       
     },
     WholeButtonStyle: {
         width: '90%',
         alignSelf: 'center',
+       
     },
 });

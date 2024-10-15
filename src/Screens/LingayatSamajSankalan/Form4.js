@@ -18,7 +18,7 @@ import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
 
 import WholeButton from '../../Components/WholeButton';
-import { NoFamily, ValidateEmail, ValidateFullname, ValidateMobileNo } from '../../Components/ValidationConfig/Validations';
+import { NoFamily, ValidateEmail, ValidateFirmemployername, ValidateFullname, ValidateMobileNo } from '../../Components/ValidationConfig/Validations';
 import BusinessandServiceDropdown from '../../Components/BusinessandServiceDropdown';
 
 const Form4 = (props) => {
@@ -27,6 +27,8 @@ const Form4 = (props) => {
     const [phoneError, setPhoneError] = useState('');
     const [phone1, setPhone1] = useState('');
     const [phone1Error, setPhone1Error] = useState('');
+    const [phone11, setPhone11] = useState('');
+    const [phone11Error, setPhone11Error] = useState('');
     const [Mobile1, setMobile1] = useState('');
     const [Mobile1Error, setMobile1Error] = useState('');
     const [Male, setMale] = useState('');
@@ -37,12 +39,16 @@ const Form4 = (props) => {
     const [FemaleError, setFemaleError] = useState('');
     const [FName, setFName] = useState('');
     const [FNameError, setFNameError] = useState('');
+    const [FName1, setFName1] = useState('');
+    const [FName1Error, setFName1Error] = useState('');
     const [Business, setBusiness] = useState(null);
     const [BusinessError, setBusinessError] = useState('');
     const [showInputField, setShowInputField] = useState(false);
     const [showInputField1, setShowInputField1] = useState(false);
     const [employer, setemployer] = useState('');
     const [employerError, setemployerError] = useState('');
+    const [employer1, setemployer1] = useState('');
+    const [employer1Error, setemployer1Error] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -239,101 +245,105 @@ const Form4 = (props) => {
                 <TouchableOpacity onPress={() => setShowInputField(!showInputField)} style={{ alignItems: 'flex-end' }}><Text style={styles.firstname1}>Add Details</Text></TouchableOpacity>
                 {showInputField && (
                     <>
-                  
-                <Inputfield
-                    placeholder={'Enter First Name'}
-                    MaxLength={256}
-                    value={FName}
+
+                        <Text style={styles.firstname}>
+                            Full Name
+                            <Text style={styles.starStyle}>*</Text>
+                        </Text>
+                        <Inputfield
+                            placeholder={'Enter First Name'}
+                            MaxLength={256}
+                            value={FName}
 
 
-                    onBlur={() => {
-                        if (FName != '' || FName != undefined) {
-                            setShowError(prevState => ({
-                                ...prevState,
-                                FNameError: true,
-                            }));
-                        }
-                    }}
-                    onChangeText={(text) => {
-                        if (FName != '' || FName != undefined) {
-                            setFName(text);
-                            setFNameError(ValidateFullname(text));
-                        }
-                    }}
-                    ShowError={ShowError.FNameError}
-                    Error={FNameError}
-                />
-                       <Text style={styles.firstname}>
-          Name Of the firm or employer
-          <Text style={styles.starStyle}>*</Text>
-        </Text>
-        <Inputfield
-          placeholder={'Enter Name Of the firm or employer'}
-          MaxLength={256}
-          value={employer}
+                            onBlur={() => {
+                                if (FName != '' || FName != undefined) {
+                                    setShowError(prevState => ({
+                                        ...prevState,
+                                        FNameError: true,
+                                    }));
+                                }
+                            }}
+                            onChangeText={(text) => {
+                                if (FName != '' || FName != undefined) {
+                                    setFName(text);
+                                    setFNameError(ValidateFullname(text));
+                                }
+                            }}
+                            ShowError={ShowError.FNameError}
+                            Error={FNameError}
+                        />
+                        <Text style={styles.firstname}>
+                            Name Of the firm or employer
+                            <Text style={styles.starStyle}>*</Text>
+                        </Text>
+                        <Inputfield
+                            placeholder={'Enter Name Of the firm or employer'}
+                            MaxLength={256}
+                            value={employer}
 
 
-          onBlur={() => {
-            if (employer != '' || employer != undefined) {
-              setShowError((prevState) => ({
-                ...prevState,
-                employerError: true,
-              }));
-            }
-          }}
-          onChangeText={(text) => {
-            if (employer != '' || employer != undefined) {
-              setemployer(text);
-              setemployerError(ValidateFirmemployername(text));
-            }
-          }}
-          ShowError={ShowError.employerError}
-          Error={employerError}
-        />
-                <Text style={styles.firstname}>
-                    Business Or Service
-                    <Text style={styles.starStyle}>*</Text>
-                </Text>
-                <View style={{ marginTop: '3.3%' }}>
-                    <BusinessandServiceDropdown
-                        setBusiness={setBusiness}
-                        Business={Business}
-                        setBusinessError={setBusinessError}
-                    />
-                    {BusinessError && Business === null && (
-                        <Text style={styles.Errorstyle1}>{BusinessError}</Text>
-                    )}
-                </View>
-                <Text style={styles.firstname}>
-                    Mobile Number
-                </Text>
-                <Inputfield
-                    // edit={EmailEdit}
-                    placeholder={'Enter Mobile Number'}
-                    MaxLength={12}
-                    value={phone1}
-                    keyboardType="number-pad"
-                    onBlur={() => {
-                        if (phone1 != '' || phone1 != undefined) {
-                            setShowError(prevState => ({
-                                ...prevState,
-                                phone1error: true,
-                            }));
-                        }
-                    }}
-                    onChangeText={(num) => {
-                        if (phone1 != '' || phone1 != undefined) {
-                            setPhone1(num);
-                            setPhone1Error(ValidateMobileNo(num));
-                        }
-                    }}
-                    ShowError={ShowError.phone1Error}
-                    Error={phone1Error}
-                    style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
-                />
-                </>
+                            onBlur={() => {
+                                if (employer != '' || employer != undefined) {
+                                    setShowError((prevState) => ({
+                                        ...prevState,
+                                        employerError: true,
+                                    }));
+                                }
+                            }}
+                            onChangeText={(text) => {
+                                if (employer != '' || employer != undefined) {
+                                    setemployer(text);
+                                    setemployerError(ValidateFirmemployername(text));
+                                }
+                            }}
+                            ShowError={ShowError.employerError}
+                            Error={employerError}
+                        />
+                        <Text style={styles.firstname}>
+                            Business Or Service
+                            <Text style={styles.starStyle}>*</Text>
+                        </Text>
+                        <View style={{ marginTop: '3.3%' }}>
+                            <BusinessandServiceDropdown
+                                setBusiness={setBusiness}
+                                Business={Business}
+                                setBusinessError={setBusinessError}
+                            />
+                            {BusinessError && Business === null && (
+                                <Text style={styles.Errorstyle1}>{BusinessError}</Text>
+                            )}
+                        </View>
+                        <Text style={styles.firstname}>
+                            Mobile Number
+                        </Text>
+                        <Inputfield
+                            // edit={EmailEdit}
+                            placeholder={'Enter Mobile Number'}
+                            MaxLength={12}
+                            value={phone1}
+                            keyboardType="number-pad"
+                            onBlur={() => {
+                                if (phone1 != '' || phone1 != undefined) {
+                                    setShowError(prevState => ({
+                                        ...prevState,
+                                        phone1error: true,
+                                    }));
+                                }
+                            }}
+                            onChangeText={(num) => {
+                                if (phone1 != '' || phone1 != undefined) {
+                                    setPhone1(num);
+                                    setPhone1Error(ValidateMobileNo(num));
+                                }
+                            }}
+                            ShowError={ShowError.phone1Error}
+                            Error={phone1Error}
+                            style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
+                        />
+                    </>
                 )
-            }
+                }
 
                 <Text style={styles.firstname}>
                     Nos. Of Family Members (Female)<Text style={styles.starStyle}>*</Text>
@@ -362,104 +372,109 @@ const Form4 = (props) => {
                     ShowError={ShowError.FemaleError}
                     Error={FemaleError}
                 />
-                <TouchableOpacity onPress={() => setShowInputField1(!showInputField1)}  style={{ alignItems: 'flex-end' }}><Text style={styles.firstname1}>Add Details</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => setShowInputField1(!showInputField1)} style={{ alignItems: 'flex-end' }}><Text style={styles.firstname1}>Add Details</Text></TouchableOpacity>
                 {showInputField1 && (
                     <>
-                  
-                <Inputfield
-                    placeholder={'Enter First Name'}
-                    MaxLength={256}
-                    value={FName}
+
+                        <Text style={styles.firstname}>
+                            Full Name
+                            <Text style={styles.starStyle}>*</Text>
+                        </Text>
+
+                        <Inputfield
+                            placeholder={'Enter First Name'}
+                            MaxLength={256}
+                            value={FName1}
 
 
-                    onBlur={() => {
-                        if (FName != '' || FName != undefined) {
-                            setShowError(prevState => ({
-                                ...prevState,
-                                FNameError: true,
-                            }));
-                        }
-                    }}
-                    onChangeText={(text) => {
-                        if (FName != '' || FName != undefined) {
-                            setFName(text);
-                            setFNameError(ValidateFullname(text));
-                        }
-                    }}
-                    ShowError={ShowError.FNameError}
-                    Error={FNameError}
-                />
-                       <Text style={styles.firstname}>
-          Name Of the firm or employer
-          <Text style={styles.starStyle}>*</Text>
-        </Text>
-        <Inputfield
-          placeholder={'Enter Name Of the firm or employer'}
-          MaxLength={256}
-          value={employer}
+                            onBlur={() => {
+                                if (FName1 != '' || FName1 != undefined) {
+                                    setShowError(prevState => ({
+                                        ...prevState,
+                                        FNameError1: true,
+                                    }));
+                                }
+                            }}
+                            onChangeText={(text) => {
+                                if (FName1 != '' || FName1 != undefined) {
+                                    setFName1(text);
+                                    setFName1Error(ValidateFullname(text));
+                                }
+                            }}
+                            ShowError={ShowError.FNameErro1r}
+                            Error={FName1Error}
+                        />
+                        <Text style={styles.firstname}>
+                            Name Of the firm or employer
+                            <Text style={styles.starStyle}>*</Text>
+                        </Text>
+                        <Inputfield
+                            placeholder={'Enter Name Of the firm or employer'}
+                            MaxLength={256}
+                            value={employer1}
 
 
-          onBlur={() => {
-            if (employer != '' || employer != undefined) {
-              setShowError((prevState) => ({
-                ...prevState,
-                employerError: true,
-              }));
-            }
-          }}
-          onChangeText={(text) => {
-            if (employer != '' || employer != undefined) {
-              setemployer(text);
-              setemployerError(ValidateFirmemployername(text));
-            }
-          }}
-          ShowError={ShowError.employerError}
-          Error={employerError}
-        />
-                <Text style={styles.firstname}>
-                    Business Or Service
-                    <Text style={styles.starStyle}>*</Text>
-                </Text>
-                <View style={{ marginTop: '3.3%' }}>
-                    <BusinessandServiceDropdown
-                        setBusiness={setBusiness}
-                        Business={Business}
-                        setBusinessError={setBusinessError}
-                    />
-                    {BusinessError && Business === null && (
-                        <Text style={styles.Errorstyle1}>{BusinessError}</Text>
-                    )}
-                </View>
-                <Text style={styles.firstname}>
-                    Mobile Number
-                </Text>
-                <Inputfield
-                    // edit={EmailEdit}
-                    placeholder={'Enter Mobile Number'}
-                    MaxLength={12}
-                    value={phone1}
-                    keyboardType="number-pad"
-                    onBlur={() => {
-                        if (phone1 != '' || phone1 != undefined) {
-                            setShowError(prevState => ({
-                                ...prevState,
-                                phone1error: true,
-                            }));
-                        }
-                    }}
-                    onChangeText={(num) => {
-                        if (phone1 != '' || phone1 != undefined) {
-                            setPhone1(num);
-                            setPhone1Error(ValidateMobileNo(num));
-                        }
-                    }}
-                    ShowError={ShowError.phone1Error}
-                    Error={phone1Error}
-                    style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
-                />
-                </>
+                            onBlur={() => {
+                                if (employer1 != '' || employer1 != undefined) {
+                                    setShowError((prevState) => ({
+                                        ...prevState,
+                                        employer1Error: true,
+                                    }));
+                                }
+                            }}
+                            onChangeText={(text) => {
+                                if (employer1 != '' || employer1 != undefined) {
+                                    setemployer1(text);
+                                    setemployer1Error(ValidateFirmemployername(text));
+                                }
+                            }}
+                            ShowError={ShowError.employer1Error}
+                            Error={employer1Error}
+                        />
+                        <Text style={styles.firstname}>
+                            Business Or Service
+                            <Text style={styles.starStyle}>*</Text>
+                        </Text>
+                        <View style={{ marginTop: '3.3%' }}>
+                            <BusinessandServiceDropdown
+                                setBusiness={setBusiness}
+                                Business={Business}
+                                setBusinessError={setBusinessError}
+                            />
+                            {BusinessError && Business === null && (
+                                <Text style={styles.Errorstyle1}>{BusinessError}</Text>
+                            )}
+                        </View>
+                        <Text style={styles.firstname}>
+                            Mobile Number
+                        </Text>
+                        <Inputfield
+                            // edit={EmailEdit}
+                            placeholder={'Enter Mobile Number'}
+                            MaxLength={12}
+                            value={phone11}
+                            keyboardType="number-pad"
+                            onBlur={() => {
+                                if (phone11 != '' || phone11 != undefined) {
+                                    setShowError(prevState => ({
+                                        ...prevState,
+                                        phone11error: true,
+                                    }));
+                                }
+                            }}
+                            onChangeText={(num) => {
+                                if (phone11 != '' || phone11 != undefined) {
+                                    setPhone11(num);
+                                    setPhone11Error(ValidateMobileNo(num));
+                                }
+                            }}
+                            ShowError={ShowError.phone11Error}
+                            Error={phone11Error}
+                            style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
+                        />
+                    </>
                 )
-            }
+                }
                 <WholeButton Label={'Submit'} Action={Form4} styles={{ width: WIDTH * 0.9 }} />
 
 
