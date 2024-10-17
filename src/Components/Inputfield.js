@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   PlaceholderStyle: {
-    color: '#000',
+    color: '#1C57A5',
     fontSize: 15,
     width: '90%',
     fontFamily: FONTS.regular,
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     borderRadius: 8,
     fontFamily: FONTS.semibold,
-    color: '#000',
+    color: '#1C57A5',
   },
   Errorstyle: {
     color: 'red',

@@ -14,6 +14,7 @@ import GenderDropDown from '../../Components/GenderDropDown';
 import DatePicker from 'react-native-date-picker';
 import SubcastDropdown from '../../Components/SubcastDropdown';
 import { VECTOR_ICONS } from '../../assets/Theme';
+import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 import moment from 'moment';
 import SideButton from '../../Components/SideButton';
 import { ValidateFullname, ValidateMiddlename, ValidateSurname } from '../../Components/ValidationConfig/Validations';
@@ -224,7 +225,7 @@ const Form1 = (props) => {
               ? moment(birthDate).format('DD-MM-YYYY')
               : 'Enter Birth Date'}
           </Text>
-          <VECTOR_ICONS.FontAwesome6
+          <FontAwesome6
             name="calendar-days"
             size={20}
             color={'#1C57A5'}

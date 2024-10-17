@@ -108,12 +108,9 @@ const Form4 = (props) => {
         let emailError = ValidateEmail(Email);
         let femaleError = NoFamily(Female);
 
-        // Check if all validations pass
         if (mobileError === '' && mobile1Err === '' && maleErr === "" && emailError === "" && femaleError === "") {
-            // Show success alert message
             Alert.alert('Success', 'Your application was submitted successfully');
         } else {
-            // Set error messages in the state
             setPhoneError(mobileError);
             setMobile1Error(mobile1Err);
             setMaleError(maleErr);
@@ -127,15 +124,13 @@ const Form4 = (props) => {
                 EmailError: true,
                 FemaleError: true
             });
-
-            // Show alert for validation errors
             Alert.alert('Error', 'Please fix the validation errors before submitting');
         }
     };
 
 
     const addNewDetails = () => {
-        if (detailsArray.length < 5) {  // Limit to 5 entries
+        if (detailsArray.length < 5) {  
             setDetailsArray([...detailsArray, {
                 Relation1: '',
                 FName: '',
@@ -144,11 +139,11 @@ const Form4 = (props) => {
                 Business: null,
                 phone1: ''
             }]);
-            setShowInputField(true);  // Show input fields when "Add Details" is clicked
+            setShowInputField(true); 
         }
     };
 
-    // Function to update details in a particular form set
+
     const updateDetails = (index, key, value) => {
         const updatedDetails = [...detailsArray];
         updatedDetails[index][key] = value;
@@ -156,20 +151,19 @@ const Form4 = (props) => {
     };
 
     const addNewDetails1 = () => {
-        if (detailsArray1.length < 5) {  // Limit to 5 entries
+        if (detailsArray1.length < 5) {  
             setDetailsArray1([...detailsArray1, {
                 Relation1: '',
                 FName: '',
                 employer: '',
-                birthDate: new Date(),
+                birthDate1: new Date(),
                 Business: null,
                 phone1: ''
             }]);
-            setShowInputField(true);  // Show input fields when "Add Details" is clicked
+            setShowInputField(true);  
         }
     };
 
-    // Function to update details in a particular form set
     const updateDetails1 = (index, key, value) => {
         const updatedDetails1 = [...detailsArray1];
         updatedDetails1[index][key] = value;
@@ -180,8 +174,7 @@ const Form4 = (props) => {
     return (
         <KeyboardAwareScrollView
             style={{ flex: 1, alignSelf: 'center' }}
-            showsVerticalScrollIndicator={false}
-        >
+            showsVerticalScrollIndicator={false}>
             <View style={styles.viewStyle}>
                 <View style={styles.headerContainer}>
                     <Text style={styles.headStyle}>Contact Details</Text>
@@ -242,8 +235,6 @@ const Form4 = (props) => {
                     Error={Mobile1Error}
                     style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
                 />
-
-
                 <Text style={styles.firstname}>
                     Email Address
                 </Text>
@@ -268,8 +259,6 @@ const Form4 = (props) => {
                     ShowError={ShowError.EmailError}
                     Error={EmailError}
                 />
-
-
                 <Text style={styles.firstname}>
                     Nos. Of Family Members (Male)
                     <Text style={styles.starStyle}>*</Text>
@@ -296,9 +285,7 @@ const Form4 = (props) => {
                     ShowError={ShowError.MaleError}
                     Error={MaleError}
                 />
-
                 {detailsArray.length < 5 && (
-
                     <TouchableOpacity
                         onPress={addNewDetails}
                         style={{ alignItems: 'flex-end' }}
@@ -310,10 +297,9 @@ const Form4 = (props) => {
 
                 {showInputField && (
                     <>
-                        {/* Dynamically render form inputs */}
                         {detailsArray.map((details, index) => (
                             <View key={index} style={{
-                                backgroundColor: '#FFF', width: width * 0.9, boederRadious: 9, padding: 2, alignSelf: 'center', marginVertical: '2%',
+                                backgroundColor: '#FFF', width: width * 0.9, borderRadius: 9, padding: 2, alignSelf: 'center', marginVertical: '2%',
                                 shadowColor: "#000",
                                 shadowOffset: {
                                     width: 0,
@@ -447,12 +433,9 @@ const Form4 = (props) => {
 
                     </>
                 )}
-
-
                 <Text style={styles.firstname}>
                     Nos. Of Family Members (Female)<Text style={styles.starStyle}>*</Text>
                 </Text>
-
                 <Inputfield
                     placeholder={'Enter Nos. Of Family Members (Female)'}
                     MaxLength={2}
@@ -491,7 +474,6 @@ const Form4 = (props) => {
 
                 {showInputField && (
                     <>
-                        {/* Dynamically render form inputs */}
                         {detailsArray1.map((details1, index) => (
                             <View key={index} style={{
                                 backgroundColor: '#FFF', width: width * 0.9, boederRadious: 9, padding: 2, alignSelf: 'center', marginVertical: '2%',
@@ -504,7 +486,6 @@ const Form4 = (props) => {
                                 shadowRadius: 6.27,
                                 elevation: 10,
                             }} >
-
                                 <Text style={styles.firstname}>
                                     Relation
                                     <Text style={styles.starStyle}>*</Text>
@@ -514,51 +495,64 @@ const Form4 = (props) => {
                                     placeholder={'Enter Relation'}
                                     MaxLength={256}
                                     value={details1.Relation}
-                                    onBlur={() => {
-                                        if (details1.Relation != '' || details1.Relation != undefined) {
-                                            setShowError(prevState => ({
-                                                ...prevState,
-                                                RelationError: true,
-                                            }));
-                                        }
-                                    }}
-                                    onChangeText={(text) => {
-                                        if (details1.Relation != '' || details1.Relation != undefined) {
-                                            setRelation(text);
-                                            setRelationError(ValidateFullname(text));
-                                        }
-                                    }}
-                                    ShowError={ShowError.RelationError}
-                                    Error={RelationError}
-                                />
+                                    // onBlur={() => {
+                                    //     if (details1.Relation != '' || details1.Relation != undefined) {
+                                    //         setShowError(prevState => ({
+                                    //             ...prevState,
+                                    //             RelationError: true,
+                                    //         }));
+                                    //     }
+                                    // }}
+                                    // onChangeText={(text) => {
+                                    //     if (details1.Relation != '' || details1.Relation != undefined) {
+                                    //         setRelation(text);
+                                    //         setRelationError(ValidateFullname(text));
+                                    //     }
+                                    // }}
+                                    // ShowError={ShowError.RelationError}
+                                    // Error={RelationError}
 
+                                    onBlur={() => {
+                                        if (details1.Relation) {
+                                            updateDetails1(index, 'RelationError1', ValidateFullname(details1.Relation));
+                                        }
+                                    }}
+                                    onChangeText={(text) => updateDetails1(index, 'Relation1', text)}
+                                    ShowError={ShowError.RelationError}
+                                    Error={details1.RelationError}
+                                />
                                 <Text style={styles.firstname}>
                                     Full Name
                                     <Text style={styles.starStyle}>*</Text>
                                 </Text>
-
                                 <Inputfield
                                     placeholder={'Enter First Name'}
                                     MaxLength={256}
                                     value={details1.FName1}
-
-
+                                    // onBlur={() => {
+                                    //     if (details1.FName1 != '' || details1.FName1 != undefined) {
+                                    //         setShowError(prevState => ({
+                                    //             ...prevState,
+                                    //             FNameError1: true,
+                                    //         }));
+                                    //     }
+                                    // }}
+                                    // onChangeText={(text) => {
+                                    //     if (details1.FName1 != '' || details1.FName1 != undefined) {
+                                    //         setFName1(text);
+                                    //         setFName1Error(ValidateFullname(text));
+                                    //     }
+                                    // }}
+                                    // ShowError={ShowError.FNameError1}
+                                    // Error={FName1Error}
                                     onBlur={() => {
-                                        if (details1.FName1 != '' || details1.FName1 != undefined) {
-                                            setShowError(prevState => ({
-                                                ...prevState,
-                                                FNameError1: true,
-                                            }));
+                                        if (details1.FName1) {
+                                            updateDetails1(index, 'FNameError', ValidateFullname(details.FName1));
                                         }
                                     }}
-                                    onChangeText={(text) => {
-                                        if (details1.FName1 != '' || details1.FName1 != undefined) {
-                                            setFName1(text);
-                                            setFName1Error(ValidateFullname(text));
-                                        }
-                                    }}
+                                    onChangeText={(text) => updateDetails1(index, 'FName1', text)}
                                     ShowError={ShowError.FNameError1}
-                                    Error={FName1Error}
+                                    Error={details1.FName1Error}
                                 />
                                 <Text style={styles.firstname}>
                                     Name Of the firm or employer
@@ -568,24 +562,31 @@ const Form4 = (props) => {
                                     placeholder={'Enter Name Of the firm or employer'}
                                     MaxLength={256}
                                     value={details1.employer1}
-
+                                    // onBlur={() => {
+                                    //     if (details1.employer1 != '' || details1.employer1 != undefined) {
+                                    //         setShowError((prevState) => ({
+                                    //             ...prevState,
+                                    //             employer1Error: true,
+                                    //         }));
+                                    //     }
+                                    // }}
+                                    // onChangeText={(text) => {
+                                    //     if (details1.employer1 != '' || details1.employer1 != undefined) {
+                                    //         setemployer1(text);
+                                    //         setemployer1Error(ValidateFirmemployername(text));
+                                    //     }
+                                    // }}
+                                    // ShowError={ShowError.employer1Error}
+                                    // Error={employer1Error}
 
                                     onBlur={() => {
-                                        if (details1.employer1 != '' || details1.employer1 != undefined) {
-                                            setShowError((prevState) => ({
-                                                ...prevState,
-                                                employer1Error: true,
-                                            }));
+                                        if (details1.employer1) {
+                                            updateDetails1(index, 'employerError1', ValidateFirmemployername(details1.employer1));
                                         }
                                     }}
-                                    onChangeText={(text) => {
-                                        if (details1.employer1 != '' || details1.employer1 != undefined) {
-                                            setemployer1(text);
-                                            setemployer1Error(ValidateFirmemployername(text));
-                                        }
-                                    }}
+                                    onChangeText={(text) => updateDetails1(index, 'employer1', text)}
                                     ShowError={ShowError.employer1Error}
-                                    Error={employer1Error}
+                                    Error={details1.employer1Error}
                                 />
 
                                 <Text style={styles.firstname}>
@@ -597,7 +598,7 @@ const Form4 = (props) => {
                                 >
                                     <Text style={dateSelected1 ? styles.dateStyle : styles.dateStyle1}>
                                         {dateSelected1
-                                            ? moment(birthDate1).format('DD-MM-YYYY')
+                                            ? moment(details1.birthDate1).format('DD-MM-YYYY')
                                             : 'Enter Birth Date'}
                                     </Text>
                                     <VECTOR_ICONS.FontAwesome6
@@ -612,7 +613,7 @@ const Form4 = (props) => {
                                 <DatePicker
                                     modal
                                     open={open1}
-                                    date={birthDate1}
+                                    date={details1.birthDate1}
                                     mode="date"
                                     maximumDate={date18YearsAgo}
                                     minimumDate={date100YearsAgo}
@@ -620,7 +621,7 @@ const Form4 = (props) => {
                                         setOpen1(false);
                                         setDate1(date);
                                         setDateSelected1(true);
-
+                                        updateDetails(index, 'birthDate1', date);
                                         // isValidDate(date);
                                         setErrorMessage('');
                                     }}
@@ -633,14 +634,23 @@ const Form4 = (props) => {
                                     <Text style={styles.starStyle}>*</Text>
                                 </Text>
                                 <View style={{ marginTop: '3.3%' }}>
-                                    <BusinessandServiceDropdown
+                                    {/* <BusinessandServiceDropdown
                                         setBusiness={setBusiness1}
                                         Business={Business1}
                                         setBusinessError={setBusinessError1}
                                     />
                                     {BusinessError1 && Business1 === null && (
                                         <Text style={styles.Errorstyle1}>{BusinessError1}</Text>
+                                    )} */}
+                                    <BusinessandServiceDropdown
+                                        setBusiness={(value) => updateDetails1(index, 'Business1', value)}
+                                        Business={details1.Business1}
+                                        setBusinessError={(error) => updateDetails1(index, 'BusinessError1', error)}
+                                    />
+                                    {details1.BusinessError1 && details1.Business === null && (
+                                        <Text style={styles.Errorstyle1}>{details1.BusinessError1}</Text>
                                     )}
+
                                 </View>
                                 <Text style={styles.firstname}>
                                     Mobile Number
@@ -651,29 +661,35 @@ const Form4 = (props) => {
                                     MaxLength={12}
                                     value={details1.phone11}
                                     keyboardType="number-pad"
-                                    onBlur={() => {
-                                        if (details1.phone11 != '' || details1.phone11 != undefined) {
-                                            setShowError(prevState => ({
-                                                ...prevState,
-                                                phone11error: true,
-                                            }));
-                                        }
-                                    }}
-                                    onChangeText={(num) => {
-                                        if (details1.phone11 != '' || details1.phone11 != undefined) {
-                                            setPhone11(num);
-                                            setPhone11Error(ValidateMobileNo(num));
-                                        }
-                                    }}
-                                    ShowError={ShowError.phone11Error}
-                                    Error={phone11Error}
-                                    style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.4%', }}
-                                />
+                                    // onBlur={() => {
+                                    //     if (details1.phone11 != '' || details1.phone11 != undefined) {
+                                    //         setShowError(prevState => ({
+                                    //             ...prevState,
+                                    //             phone11error: true,
+                                    //         }));
+                                    //     }
+                                    // }}
+                                    // onChangeText={(num) => {
+                                    //     if (details1.phone11 != '' || details1.phone11 != undefined) {
+                                    //         setPhone11(num);
+                                    //         setPhone11Error(ValidateMobileNo(num));
+                                    //     }
+                                    // }}
+                                    // ShowError={ShowError.phone11Error}
+                                    // Error={phone11Error}
 
+                                    onBlur={() => {
+                                        if (details1.phone11 !== '' && details1.phone11 !== undefined) {
+                                            updateDetails1(index, 'phone11Error', ValidateMobileNo(details1.phone11));
+                                        }
+                                    }}
+                                    onChangeText={(num) => updateDetails1(index, 'phone11', num)}
+                                    ShowError={details1.phone11Error}
+                                    Error={details1.phone11Error}
+                                    style={{ color: '#1C57A5', fontSize: 15, fontFamily: FONTS.semibold, paddingVertical: '4.2%', }}
+                                />
                             </View>
                         ))}
-
-
                     </>
                 )}
 
@@ -747,8 +763,8 @@ const styles = StyleSheet.create({
     },
     datePickerButton: {
         backgroundColor: '#DAEAFF',
-        width: WIDTH * 0.9,
-        paddingVertical: '4.9%',
+        width: WIDTH * 0.89,
+        paddingVertical: '4.2%',
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#1C57A5',
