@@ -1,8 +1,18 @@
-import { StyleSheet, Text, View, SafeAreaView, Dimensions ,FlatList} from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, SafeAreaView, Dimensions ,FlatList, TextInput,TouchableOpacity} from 'react-native'
+import React, { useState } from 'react'
 import FONTS from '../../assets/Fonts';
+import COLORS from '../../assets/colors/Colors';
+import AntDesign from 'react-native-vector-icons/AntDesign'
 const { height, width } = Dimensions.get('window');
 const AlldataHistory = () => {
+
+
+  const [Advlist, setAdvlist] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filterData = Advlist.filter((item) =>
+    item?.advertisementName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#f7f7f7' }}>
       <View style={styles.headerContainer}>
@@ -10,6 +20,29 @@ const AlldataHistory = () => {
       </View>
 
 
+      <View style={styles.InputViewFiled}>
+            <TextInput
+              placeholder="Search by User details"
+              style={{
+                width: width * 0.74,
+                color:'#1C57A5',
+                fontFamily: FONTS.Regular,
+              }}
+              placeholderTextColor={"#1C57A5"}
+              value={searchQuery}
+              onChangeText={(text) => setSearchQuery(text)}
+            />
+
+            <TouchableOpacity
+              style={{ alignSelf: "center", paddingRight: "4%" }}
+            >
+              <AntDesign
+                name="search1"
+                color={"#1C57A5"}
+                size={22}
+              />
+            </TouchableOpacity>
+          </View>
       <FlatList
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
@@ -125,6 +158,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     textDecorationLine: 'underline',
+  },
+  InputViewFiled: {
+    backgroundColor: '#DAEAFF',
+    paddingHorizontal: "1.5%" ,
+    width: width * 0.9,
+    alignSelf: "center",
+    borderRadius: 5,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: "3%",
+    borderColor: '#1C57A5',
+    borderWidth: 1
   },
 
 })

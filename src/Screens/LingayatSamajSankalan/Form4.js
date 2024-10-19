@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import {
-
     StyleSheet,
     Text,
-
     View,
     Dimensions,
     Alert,
@@ -68,6 +66,10 @@ const Form4 = (props) => {
         new Date(new Date().setFullYear(new Date().getFullYear() - 100)));
     const [date18YearsAgo, setDate18YearsAgo] = useState(
         new Date(new Date().setFullYear(new Date().getFullYear() - 89)));
+    const [date100YearsAgo1, setDate100YearsAgo1] = useState(
+        new Date(new Date().setFullYear(new Date().getFullYear() - 100)));
+    const [date18YearsAgo1, setDate18YearsAgo1] = useState(
+        new Date(new Date().setFullYear(new Date().getFullYear() - 89)));
     const [errorMessage, setErrorMessage] = useState('');
     const [ShowError, setShowError] = useState({
         phoneError: false,
@@ -100,6 +102,27 @@ const Form4 = (props) => {
         }
     };
 
+    const minDate1 = new Date("1945-1-1");
+    const maxDate1 = new Date('2045-1-1');
+    const isValidDate1 = (Date_) => {
+        const selectedDate1 = Date_ || minDate1;
+        setErrorMessage('');
+        if (selectedDate1 <= minDate1 || selectedDate1 >= maxDate1) {
+            console.log(
+                selectedDate1 <= minDate1 || selectedDate1 >= maxDate1,
+                birthDate1,
+                'birthDate1',
+                dateSelected1,
+            );
+            setErrorMessage(
+                dateSelected1 ? '' : 'Please enter a valid birth date.',
+            );
+            return false;
+        } else {
+            setErrorMessage('');
+            return true;
+        }
+    };
 
     const Form4 = () => {
         let mobileError = ValidateMobileNo(phone);
@@ -109,7 +132,7 @@ const Form4 = (props) => {
         let femaleError = NoFamily(Female);
 
         if (mobileError === '' && mobile1Err === '' && maleErr === "" && emailError === "" && femaleError === "") {
-            Alert.alert('Success', 'Your application was submitted successfully');
+            props.navigation.navigate('AlldataHistory')
         } else {
             setPhoneError(mobileError);
             setMobile1Error(mobile1Err);
@@ -130,7 +153,7 @@ const Form4 = (props) => {
 
 
     const addNewDetails = () => {
-        if (detailsArray.length < 5) {  
+        if (detailsArray.length < 5) {
             setDetailsArray([...detailsArray, {
                 Relation1: '',
                 FName: '',
@@ -139,7 +162,7 @@ const Form4 = (props) => {
                 Business: null,
                 phone1: ''
             }]);
-            setShowInputField(true); 
+            setShowInputField(true);
         }
     };
 
@@ -151,16 +174,16 @@ const Form4 = (props) => {
     };
 
     const addNewDetails1 = () => {
-        if (detailsArray1.length < 5) {  
+        if (detailsArray1.length < 5) {
             setDetailsArray1([...detailsArray1, {
-                Relation1: '',
-                FName: '',
-                employer: '',
+                Relation: '',
+                FName1: '',
+                employer1: '',
                 birthDate1: new Date(),
-                Business: null,
-                phone1: ''
+                Business1: null,
+                phone11: ''
             }]);
-            setShowInputField(true);  
+            setShowInputField(true);
         }
     };
 
@@ -285,14 +308,7 @@ const Form4 = (props) => {
                     ShowError={ShowError.MaleError}
                     Error={MaleError}
                 />
-                {detailsArray.length < 5 && (
-                    <TouchableOpacity
-                        onPress={addNewDetails}
-                        style={{ alignItems: 'flex-end' }}
-                    >
-                        <Text style={styles.firstname1}>Add Details</Text>
-                    </TouchableOpacity>
-                )}
+
 
 
                 {showInputField && (
@@ -345,23 +361,7 @@ const Form4 = (props) => {
                                     Error={details.FNameError}
                                 />
 
-                                <Text style={styles.firstname}>
-                                    Name Of the firm or employer
-                                    <Text style={styles.starStyle}>*</Text>
-                                </Text>
-                                <Inputfield
-                                    placeholder={'Enter Name Of the firm or employer'}
-                                    MaxLength={256}
-                                    value={details.employer}
-                                    onBlur={() => {
-                                        if (details.employer) {
-                                            updateDetails(index, 'employerError', ValidateFirmemployername(details.employer));
-                                        }
-                                    }}
-                                    onChangeText={(text) => updateDetails(index, 'employer', text)}
-                                    ShowError={ShowError.employerError}
-                                    Error={details.employerError}
-                                />
+
 
                                 <Text style={styles.firstname}>
                                     Date Of Birth<Text style={styles.starStyle}>*</Text>
@@ -409,6 +409,23 @@ const Form4 = (props) => {
                                         <Text style={styles.Errorstyle1}>{details.BusinessError}</Text>
                                     )}
                                 </View>
+                                <Text style={styles.firstname}>
+                                    Name Of the firm or employer
+                                    <Text style={styles.starStyle}>*</Text>
+                                </Text>
+                                <Inputfield
+                                    placeholder={'Enter Name Of the firm or employer'}
+                                    MaxLength={256}
+                                    value={details.employer}
+                                    onBlur={() => {
+                                        if (details.employer) {
+                                            updateDetails(index, 'employerError', ValidateFirmemployername(details.employer));
+                                        }
+                                    }}
+                                    onChangeText={(text) => updateDetails(index, 'employer', text)}
+                                    ShowError={ShowError.employerError}
+                                    Error={details.employerError}
+                                />
 
                                 {/* Mobile Number */}
                                 <Text style={styles.firstname}>Mobile Number</Text>
@@ -433,6 +450,15 @@ const Form4 = (props) => {
 
                     </>
                 )}
+                {detailsArray.length < 5 && (
+                    <TouchableOpacity
+                        onPress={addNewDetails}
+                        style={{ alignItems: 'flex-end' }}
+                    >
+                        <Text style={styles.firstname1}>Add Details</Text>
+                    </TouchableOpacity>
+                )}
+
                 <Text style={styles.firstname}>
                     Nos. Of Family Members (Female)<Text style={styles.starStyle}>*</Text>
                 </Text>
@@ -460,15 +486,7 @@ const Form4 = (props) => {
                     Error={FemaleError}
                 />
 
-                {detailsArray1.length < 5 && (
 
-                    <TouchableOpacity
-                        onPress={addNewDetails1}
-                        style={{ alignItems: 'flex-end' }}
-                    >
-                        <Text style={styles.firstname1}>Add Details</Text>
-                    </TouchableOpacity>
-                )}
 
 
 
@@ -514,10 +532,10 @@ const Form4 = (props) => {
 
                                     onBlur={() => {
                                         if (details1.Relation) {
-                                            updateDetails1(index, 'RelationError1', ValidateFullname(details1.Relation));
+                                            updateDetails1(index, 'RelationError', ValidateFullname(details1.Relation));
                                         }
                                     }}
-                                    onChangeText={(text) => updateDetails1(index, 'Relation1', text)}
+                                    onChangeText={(text) => updateDetails1(index, 'Relation', text)}
                                     ShowError={ShowError.RelationError}
                                     Error={details1.RelationError}
                                 />
@@ -547,13 +565,93 @@ const Form4 = (props) => {
                                     // Error={FName1Error}
                                     onBlur={() => {
                                         if (details1.FName1) {
-                                            updateDetails1(index, 'FNameError', ValidateFullname(details.FName1));
+                                            updateDetails1(index, 'FNameError', ValidateFullname(details1.FName1));
                                         }
                                     }}
                                     onChangeText={(text) => updateDetails1(index, 'FName1', text)}
                                     ShowError={ShowError.FNameError1}
                                     Error={details1.FName1Error}
                                 />
+
+
+                                <Text style={styles.firstname}>
+                                    Date Of Birth<Text style={styles.starStyle}>*</Text>
+                                </Text>
+                                <TouchableOpacity
+                                    onPress={() => setOpen1(true)}
+                                    style={styles.datePickerButton}
+                                >
+                                    <Text style={dateSelected1 ? styles.dateStyle : styles.dateStyle1}>
+                                        {dateSelected1
+                                            ? moment(details1.birthDate1).format('DD-MM-YYYY')
+                                            : 'Enter Birth Date'}
+                                    </Text>
+                                    <VECTOR_ICONS.FontAwesome6
+                                        name="calendar-days"
+                                        size={20}
+                                        color={'#1C57A5'}
+                                    />
+                                </TouchableOpacity>
+                                {errorMessage !== '' && (
+                                    <Text style={styles.Errorstyle1}>{errorMessage}</Text>
+                                )}
+                                {/* <DatePicker
+                                    modal
+                                    open={open1}
+                                    date={details1.birthDate1}
+                                    mode="date"
+                                    maximumDate={date18YearsAgo}
+                                    minimumDate={date100YearsAgo}
+                                    onConfirm={(date) => {
+                                        setOpen1(false);
+                                        setDate1(date);
+                                        setDateSelected1(true);
+                                        updateDetails(index, 'birthDate1', date);
+                                        // isValidDate(date);
+                                        setErrorMessage('');
+                                    }}
+                                    onCancel={() => {
+                                        setOpen1(false);
+                                    }}
+                                /> */}
+                                    <DatePicker
+                                    modal
+                                    open={open1}
+                                    date={details1.birthDate1}
+                                    mode="date"
+                                    onConfirm={(date) => {
+                                        setOpen1(false);
+                                        updateDetails1(index, 'birthDate1', date);
+                                        setDateSelected1(true);
+                                        setErrorMessage('');
+                                    }}
+                                    onCancel={() => {
+                                        setOpen1(false);
+                                    }}
+                                />
+                                <Text style={styles.firstname}>
+                                    Business Or Service
+                                    <Text style={styles.starStyle}>*</Text>
+                                </Text>
+                                <View style={{ marginTop: '3.3%' }}>
+                                    {/* <BusinessandServiceDropdown
+                                        setBusiness={setBusiness1}
+                                        Business={Business1}
+                                        setBusinessError={setBusinessError1}
+                                    />
+                                    {BusinessError1 && Business1 === null && (
+                                        <Text style={styles.Errorstyle1}>{BusinessError1}</Text>
+                                    )} */}
+                                    <BusinessandServiceDropdown
+                                        setBusiness={(value) => updateDetails1(index, 'Business1', value)}
+                                        Business={details1.Business1}
+                                        setBusinessError={(error) => updateDetails1(index, 'BusinessError1', error)}
+                                    />
+                                    {details1.BusinessError1 && details1.Business === null && (
+                                        <Text style={styles.Errorstyle1}>{details1.BusinessError1}</Text>
+                                    )}
+
+                                </View>
                                 <Text style={styles.firstname}>
                                     Name Of the firm or employer
                                     <Text style={styles.starStyle}>*</Text>
@@ -588,70 +686,6 @@ const Form4 = (props) => {
                                     ShowError={ShowError.employer1Error}
                                     Error={details1.employer1Error}
                                 />
-
-                                <Text style={styles.firstname}>
-                                    Date Of Birth<Text style={styles.starStyle}>*</Text>
-                                </Text>
-                                <TouchableOpacity
-                                    onPress={() => setOpen1(true)}
-                                    style={styles.datePickerButton}
-                                >
-                                    <Text style={dateSelected1 ? styles.dateStyle : styles.dateStyle1}>
-                                        {dateSelected1
-                                            ? moment(details1.birthDate1).format('DD-MM-YYYY')
-                                            : 'Enter Birth Date'}
-                                    </Text>
-                                    <VECTOR_ICONS.FontAwesome6
-                                        name="calendar-days"
-                                        size={20}
-                                        color={'#1C57A5'}
-                                    />
-                                </TouchableOpacity>
-                                {errorMessage !== '' && (
-                                    <Text style={styles.Errorstyle1}>{errorMessage}</Text>
-                                )}
-                                <DatePicker
-                                    modal
-                                    open={open1}
-                                    date={details1.birthDate1}
-                                    mode="date"
-                                    maximumDate={date18YearsAgo}
-                                    minimumDate={date100YearsAgo}
-                                    onConfirm={(date) => {
-                                        setOpen1(false);
-                                        setDate1(date);
-                                        setDateSelected1(true);
-                                        updateDetails(index, 'birthDate1', date);
-                                        // isValidDate(date);
-                                        setErrorMessage('');
-                                    }}
-                                    onCancel={() => {
-                                        setOpen1(false);
-                                    }}
-                                />
-                                <Text style={styles.firstname}>
-                                    Business Or Service
-                                    <Text style={styles.starStyle}>*</Text>
-                                </Text>
-                                <View style={{ marginTop: '3.3%' }}>
-                                    {/* <BusinessandServiceDropdown
-                                        setBusiness={setBusiness1}
-                                        Business={Business1}
-                                        setBusinessError={setBusinessError1}
-                                    />
-                                    {BusinessError1 && Business1 === null && (
-                                        <Text style={styles.Errorstyle1}>{BusinessError1}</Text>
-                                    )} */}
-                                    <BusinessandServiceDropdown
-                                        setBusiness={(value) => updateDetails1(index, 'Business1', value)}
-                                        Business={details1.Business1}
-                                        setBusinessError={(error) => updateDetails1(index, 'BusinessError1', error)}
-                                    />
-                                    {details1.BusinessError1 && details1.Business === null && (
-                                        <Text style={styles.Errorstyle1}>{details1.BusinessError1}</Text>
-                                    )}
-
-                                </View>
                                 <Text style={styles.firstname}>
                                     Mobile Number
                                 </Text>
@@ -693,6 +727,15 @@ const Form4 = (props) => {
                     </>
                 )}
 
+                {detailsArray1.length < 5 && (
+
+                    <TouchableOpacity
+                        onPress={addNewDetails1}
+                        style={{ alignItems: 'flex-end' }}
+                    >
+                        <Text style={styles.firstname1}>Add Details</Text>
+                    </TouchableOpacity>
+                )}
                 <WholeButton Label={'Submit'} Action={Form4} styles={{ width: WIDTH * 0.9 }} />
 
 

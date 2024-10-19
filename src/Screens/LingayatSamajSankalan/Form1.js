@@ -30,14 +30,15 @@ const Form1 = (props) => {
   const [GenderError, setGenderError] = useState('');
   const [Subcast, setSubcast] = useState(null);
   const [SubcastError, setSubcastError] = useState('');
-  const [birthDate, setDate] = useState(new Date());
+
+  const [date100YearsAgo] = useState(new Date(new Date().setFullYear(new Date().getFullYear() - 100)));
+  const [date18YearsAgo] = useState(new Date(new Date().setFullYear(new Date().getFullYear() - 18)));
+
   const [open, setOpen] = useState(false);
+  const [birthDate, setBirthDate] = useState(null);
   const [dateSelected, setDateSelected] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [date100YearsAgo, setDate100YearsAgo] = useState(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 100)));
-  const [date18YearsAgo, setDate18YearsAgo] = useState(
-    new Date(new Date().setFullYear(new Date().getFullYear() - 89)));
+  
   const [ShowError, setShowError] = useState({
     FNameError: false,
     MNameError: false,
@@ -48,27 +49,24 @@ const Form1 = (props) => {
   });
 
 
+  const minDate = new Date('1905-01-01');
+  const maxDate = new Date('2090-01-01');
 
-  const minDate = new Date("1945-1-1");
-  const maxDate = new Date('2045-1-1');
-  const isValidDate = (Date_) => {
-    const selectedDate = Date_ || minDate;
-    setErrorMessage('');
-    if (selectedDate <= minDate || selectedDate >= maxDate) {
-      console.log(
-        selectedDate <= minDate || selectedDate >= maxDate,
-        birthDate,
-        'birthDate',
-        dateSelected,
-      );
-      setErrorMessage(
-        dateSelected ? '' : 'Please enter a valid birth date.',
-      );
+
+  const isValidDate = (dateSelected) => {
+    if (!dateSelected) {
+      setErrorMessage('Please enter a valid birth date.');
       return false;
-    } else {
-      setErrorMessage('');
-      return true;
     }
+
+    const selectedDate = new Date(dateSelected);  
+    if (selectedDate < minDate || selectedDate > maxDate) {
+      console.log('Selected date is out of range', selectedDate);
+      setErrorMessage('Please enter a birth date between 1945 and 2070.');
+      return false;
+    }
+    setErrorMessage('');
+    return true;
   };
 
 
@@ -101,7 +99,6 @@ const Form1 = (props) => {
 
   }
 
-
   return (
     <KeyboardAwareScrollView
       style={{ flex: 1, alignSelf: 'center',marginBottom:'2%' }}
@@ -120,8 +117,6 @@ const Form1 = (props) => {
           placeholder={'Enter First Name'}
           MaxLength={256}
           value={FName}
-       
-
           onBlur={() => {
             if (FName != '' || FName != undefined) {
               setShowError(prevState => ({
@@ -183,15 +178,10 @@ const Form1 = (props) => {
             }
           }}
           onChangeText={(text) => {
-
-
             if (SName != '' || SName != undefined) {
               setSName(text);
               setSNameError(ValidateSurname(text));
             }
-
-
-
           }}
           ShowError={ShowError.SNameError}
           Error={SNameError}
@@ -234,25 +224,23 @@ const Form1 = (props) => {
         {errorMessage !== '' && (
           <Text style={styles.Errorstyle1}>{errorMessage}</Text>
         )}
-        <DatePicker
-          modal
-          open={open}
-          date={birthDate}
-          mode="date"
-          maximumDate={date18YearsAgo}
-          minimumDate={date100YearsAgo}
-          onConfirm={(date) => {
-            setOpen(false);
-            setDate(date);
+      <DatePicker
+        modal
+        open={open}
+        date={birthDate || new Date()} // Default to current date if birthDate is not set
+        mode="date"
+        // maximumDate={date18YearsAgo} // Maximum date is 18 years ago
+        // minimumDate={date100YearsAgo} // Minimum date is 100 years ago
+        onConfirm={(date) => {
+          setOpen(false);
+          if (isValidDate(date)) {
+            setBirthDate(date); // Set the selected valid date
             setDateSelected(true);
+          }
+        }}
+        onCancel={() => setOpen(false)}
+      />
 
-            // isValidDate(date);
-            setErrorMessage('');
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
 
 
         <Text style={styles.firstname}>
