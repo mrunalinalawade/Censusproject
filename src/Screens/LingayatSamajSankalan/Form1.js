@@ -18,6 +18,8 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6'
 import moment from 'moment';
 import SideButton from '../../Components/SideButton';
 import { ValidateFullname, ValidateMiddlename, ValidateSurname } from '../../Components/ValidationConfig/Validations';
+import { setUserData } from '../../Components/Redux/UserDetails';
+import { useDispatch } from 'react-redux'
 
 const Form1 = (props) => {
   const [FName, setFName] = useState('');
@@ -48,7 +50,7 @@ const Form1 = (props) => {
     errorMessage:false
   });
 
-
+  const dispatch = useDispatch();
   const minDate = new Date('1905-01-01');
   const maxDate = new Date('2090-01-01');
 
@@ -77,6 +79,8 @@ const Form1 = (props) => {
     let dateError = isValidDate(birthDate)
 
     if (fnameError == '' && mnameError == '' && snameError == "" && Subcast !== null && Gender !== null && dateError !== null) {
+      const formData1 = { FName, MName, SName, Subcast, Gender, birthDate };
+      dispatch(setUserData(formData1));
 
       props.navigation.navigate('Form2')
 

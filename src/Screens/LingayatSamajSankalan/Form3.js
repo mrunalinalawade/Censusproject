@@ -17,6 +17,8 @@ import Inputfield from '../../Components/Inputfield';
 import GenderDropDown from '../../Components/GenderDropDown';
 import { ValidateDesignation, ValidateFirmemployername, ValidateFullname } from '../../Components/ValidationConfig/Validations';
 import BusinessandServiceDropdown from '../../Components/BusinessandServiceDropdown';
+import { useDispatch } from 'react-redux';
+import { setUserData3 } from '../../Components/Redux/UserDetails';
 
 
 
@@ -37,7 +39,7 @@ const Form3 = (props) => {
   });
 
 
-
+  const dispatch = useDispatch();
   const Form3com = () => {
     let employError = ValidateFirmemployername(employer);
     let organisationErr = ValidateDesignation(organisation);
@@ -46,6 +48,8 @@ const Form3 = (props) => {
 
 
     if (employError == '' && organisationErr == '' && Business !== null ) {
+      const formData3 = { employer, organisation, Business };
+      dispatch(setUserData3(formData3));
       props.navigation.navigate('Form4')
 
     } else {

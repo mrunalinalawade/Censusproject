@@ -20,6 +20,12 @@ import { NoFamily, ValidateEmail, ValidateFirmemployername, ValidateFullname, Va
 import BusinessandServiceDropdown from '../../Components/BusinessandServiceDropdown';
 import { VECTOR_ICONS } from '../../assets/Theme';
 import DatePicker from 'react-native-date-picker';
+import { useSelector } from 'react-redux';
+import { RootState } from "../Redux/Store";
+import axios from 'axios'; // Make sure to import axios
+import SpinningLoader from '../../APIConfig/SpinningLoader';
+import { showMessage } from 'react-native-flash-message';
+
 
 const Form4 = (props) => {
     const [detailsArray, setDetailsArray] = useState([]);
@@ -124,6 +130,15 @@ const Form4 = (props) => {
         }
     };
 
+    const formData1 = useSelector((state: RootState) => state.UserData_?.userData);
+    console.log(formData1, 'formDataformDataformDataformData');
+
+    const formData2 = useSelector((state: RootState) => state.UserData2_?.userData2);
+    console.log(formData2, 'formDataformDataformDataformData222222222222222');
+
+    const formData3 = useSelector((state: RootState) => state.UserData3_?.userData3);
+    console.log(formData3, 'formDataformDataformDataformData22222222222222233333333');
+
     const Form4 = () => {
         let mobileError = ValidateMobileNo(phone);
         let mobile1Err = ValidateMobileNo(Mobile1);
@@ -132,7 +147,8 @@ const Form4 = (props) => {
         let femaleError = NoFamily(Female);
 
         if (mobileError === '' && mobile1Err === '' && maleErr === "" && emailError === "" && femaleError === "") {
-            props.navigation.navigate('AlldataHistory')
+            submitData()
+
         } else {
             setPhoneError(mobileError);
             setMobile1Error(mobile1Err);
@@ -194,6 +210,71 @@ const Form4 = (props) => {
     };
 
 
+    const [formData, setFormData] = useState({
+        firstName:formData1?.FName,
+        middleName: formData1?.MName,
+        lastName:formData1?.SName,
+        gender: formData1?.Gender,
+        dob: formData1?.birthDate,
+        subCaste: formData1?.Subcast,
+        addressLine1: formData2?.Address,
+        addressLine2: formData2?.Address1,
+        city: formData2?.City,
+        taluka: formData2?.Taluka,
+        district:formData2?.District,
+        state: formData2?.State,
+        pincode: formData2?.Pincode,
+        occupation: formData3?.Business, 
+        firmOrEmployer:  formData3?.employer,
+        designation: formData3?.organisation,
+        mobilePrimary: phone, 
+        mobileSecondary: Mobile1,
+        emailAddress:Email,
+        numberOfFamilyMembersMale: Male,
+        numberOfFamilyMembersFemale:Female,
+        familyMembers: [
+            {
+                fullName: FName,
+                dob: birthDate,
+                occupation: Business,
+                firmOrEmployer:employer,
+                mobileNumber:phone1,
+                relation: Relation1
+            },
+            {
+                fullName:FName1,
+                dob:birthDate1,
+                occupation: Business1,
+                firmOrEmployer: employer1,
+                mobileNumber:phone11,
+                relation:Relation
+
+            }
+        ]
+    });
+
+
+    const submitData = async () => {
+        try {
+            // Make a POST request using axios
+            const response = await axios.post('https://zeelogic.in/census/save_data.php', formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            // Check for success or error
+            if (response.status === 200) {
+                props.navigation.navigate('AlldataHistory')
+                console.log(response?.data, 'AlldataHistoryAlldataHistoryAlldataHistoryAlldataHistory');
+
+            } else {
+                Alert.alert('Error', response.data?.message || 'Something went wrong');
+            }
+        } catch (error) {
+            Alert.alert('Error', 'Failed to send data: ' + error.message);
+        }
+    };
     return (
         <KeyboardAwareScrollView
             style={{ flex: 1, alignSelf: 'center' }}
@@ -614,7 +695,7 @@ const Form4 = (props) => {
                                         setOpen1(false);
                                     }}
                                 /> */}
-                                    <DatePicker
+                                <DatePicker
                                     modal
                                     open={open1}
                                     date={details1.birthDate1}

@@ -13,6 +13,8 @@ import COLORS from '../../assets/colors/Colors';
 import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
 import { OTPVerification, Validateaddress1Field, ValidateaddressField, ValidateCityField, ValidatedistrictField, ValidatestateField, ValidatetalukaField } from '../../Components/ValidationConfig/Validations';
+import { useDispatch } from 'react-redux';
+import { setUserData2 } from '../../Components/Redux/UserDetails';
 
 
 const Form2 = (props) => {
@@ -42,6 +44,7 @@ const Form2 = (props) => {
 
 
 
+    const dispatch = useDispatch();
     const Form2com = () => {
         let addressError = ValidateaddressField(Address);
         // let address1Err=ValidateCityField(Address1);
@@ -55,6 +58,8 @@ const Form2 = (props) => {
 
 
         if (addressError == '' && cityErr == '' && address1Err == "" && takukaError == "" && districtError == "" && stateError == "" && pincodeError == "") {
+            const formData2 = { Address, City, Address1, Taluka, District, State, Pincode };
+            dispatch(setUserData2(formData2));
 
             props.navigation.navigate('Form3')
         } else {
@@ -94,7 +99,7 @@ const Form2 = (props) => {
 
 
 
-                <Text style={[styles.firstname,{marginTop:'2%'}]}>
+                <Text style={[styles.firstname, { marginTop: '2%' }]}>
                     Address Line 1<Text style={styles.starStyle}>*</Text>
                 </Text>
                 <Inputfield
