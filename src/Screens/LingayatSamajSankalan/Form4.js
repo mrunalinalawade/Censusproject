@@ -30,6 +30,7 @@ import { showMessage } from 'react-native-flash-message';
 const Form4 = (props) => {
     const [detailsArray, setDetailsArray] = useState([]);
     const [detailsArray1, setDetailsArray1] = useState([]);
+    const [Loader, setLoader] = useState(false)
     const [phone, setPhone] = useState('');
     const [phoneError, setPhoneError] = useState('');
     const [phone1, setPhone1] = useState('');
@@ -140,31 +141,97 @@ const Form4 = (props) => {
     console.log(formData3, 'formDataformDataformDataformData22222222222222233333333');
 
     const Form4 = () => {
+        // let mobileError = ValidateMobileNo(phone);
+        // let mobile1Err = ValidateMobileNo(Mobile1);
+        // let maleErr = NoFamily(Male);
+        // let emailError = ValidateEmail(Email);
+        // let femaleError = NoFamily(Female);
+
+        // if (mobileError === '' && mobile1Err === '' && maleErr === "" && emailError === "" && femaleError === "") {
+        //     submitData()
+
+        // } else {
+        //     setPhoneError(mobileError);
+        //     setMobile1Error(mobile1Err);
+        //     setMaleError(maleErr);
+        //     setEmailError(emailError);
+        //     setFemaleError(femaleError);
+
+        //     setShowError({
+        //         Mobile1Error: true,
+        //         phoneError: true,
+        //         MaleError: true,
+        //         EmailError: true,
+        //         FemaleError: true
+        //     });
+        //     Alert.alert('Error', 'Please fix the validation errors before submitting');
+        // }
+
+
         let mobileError = ValidateMobileNo(phone);
-        let mobile1Err = ValidateMobileNo(Mobile1);
-        let maleErr = NoFamily(Male);
-        let emailError = ValidateEmail(Email);
-        let femaleError = NoFamily(Female);
+    let mobile1Err = ValidateMobileNo(Mobile1);
+    let maleErr = NoFamily(Male);
+    let emailError = ValidateEmail(Email);
+    let femaleError = NoFamily(Female);
 
-        if (mobileError === '' && mobile1Err === '' && maleErr === "" && emailError === "" && femaleError === "") {
-            submitData()
+    // Initialize error state for details array
+    let detailsError = false;
 
-        } else {
-            setPhoneError(mobileError);
-            setMobile1Error(mobile1Err);
-            setMaleError(maleErr);
-            setEmailError(emailError);
-            setFemaleError(femaleError);
+    const updatedDetailsArray = detailsArray.map((details, index) => {
+        let relationError = ValidateFullname(details.Relation1) || '';
+        let fnameError = ValidateFullname(details.FName) || '';
+        let employerError = ValidateFirmemployername(details.employer) || '';
+        let businessError = details.Business === null ? 'Business is required' : '';
+        let phone1Error = ValidateMobileNo(details.phone1) || '';
+        let birthDateError = !details.birthDate ? 'Date of Birth is required' : '';
 
-            setShowError({
-                Mobile1Error: true,
-                phoneError: true,
-                MaleError: true,
-                EmailError: true,
-                FemaleError: true
-            });
-            Alert.alert('Error', 'Please fix the validation errors before submitting');
+        // Update the error states
+        updateDetails(index, 'RelationError1', relationError);
+        updateDetails(index, 'FNameError', fnameError);
+        updateDetails(index, 'employerError', employerError);
+        updateDetails(index, 'BusinessError', businessError);
+        updateDetails(index, 'phone1Error', phone1Error);
+        updateDetails(index, 'birthDateError', birthDateError);
+
+        // If any error exists, mark detailsError as true
+        if (relationError || fnameError || employerError || businessError || phone1Error || birthDateError) {
+            detailsError = true;
         }
+
+        return details;
+    });
+
+    // Check for errors in the main fields and in the details array
+    if (
+        mobileError === '' && 
+        mobile1Err === '' && 
+        maleErr === "" && 
+        emailError === "" && 
+        femaleError === "" && 
+        !detailsError
+    ) {
+        // Proceed with submission if no errors
+        submitData();
+    } else {
+        // Set errors for main fields
+        setPhoneError(mobileError);
+        setMobile1Error(mobile1Err);
+        setMaleError(maleErr);
+        setEmailError(emailError);
+        setFemaleError(femaleError);
+
+        // Display the error messages
+        setShowError({
+            Mobile1Error: true,
+            phoneError: true,
+            MaleError: true,
+            EmailError: true,
+            FemaleError: true,
+            // Add the details-related error flags here if needed
+        });
+
+        Alert.alert('Error', 'Please fix the validation errors before submitting');
+    }
     };
 
 
@@ -209,52 +276,56 @@ const Form4 = (props) => {
         setDetailsArray1(updatedDetails1);
     };
 
+    
 
     const [formData, setFormData] = useState({
-        firstName:formData1?.FName,
-        middleName: formData1?.MName,
-        lastName:formData1?.SName,
+        first_name:formData1?.FName,
+        middle_name: formData1?.MName,
+        surname:formData1?.SName,
         gender: formData1?.Gender,
         dob: formData1?.birthDate,
-        subCaste: formData1?.Subcast,
-        addressLine1: formData2?.Address,
-        addressLine2: formData2?.Address1,
+        sub_caste: formData1?.Subcast,
+        address_line1: formData2?.Address,
+        address_line2: formData2?.Address1,
         city: formData2?.City,
         taluka: formData2?.Taluka,
         district:formData2?.District,
         state: formData2?.State,
         pincode: formData2?.Pincode,
-        occupation: formData3?.Business, 
-        firmOrEmployer:  formData3?.employer,
+        business_or_service: formData3?.Business, 
+        firm_or_employer:  formData3?.employer,
         designation: formData3?.organisation,
-        mobilePrimary: phone, 
-        mobileSecondary: Mobile1,
-        emailAddress:Email,
-        numberOfFamilyMembersMale: Male,
-        numberOfFamilyMembersFemale:Female,
-        familyMembers: [
+        mobile1: phone, 
+        mobile2: Mobile1,
+        email_address:Email,
+        no_of_family_members_male: Male,
+        no_of_family_members_female:Female,
+        family_members: [
             {
-                fullName: FName,
+                full_name: FName,
                 dob: birthDate,
-                occupation: Business,
-                firmOrEmployer:employer,
-                mobileNumber:phone1,
+                business_or_service: Business,
+                firm_or_employer:employer,
+                mobile_no:phone1,
                 relation: Relation1
             },
             {
-                fullName:FName1,
+                full_name:FName1,
                 dob:birthDate1,
-                occupation: Business1,
-                firmOrEmployer: employer1,
-                mobileNumber:phone11,
+                business_or_service: Business1,
+                firm_or_employer: employer1,
+                mobile_no:phone11,
                 relation:Relation
 
             }
         ]
     });
+  
 
+    console.log(formData ,"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
     const submitData = async () => {
+        setLoader(true)
         try {
             // Make a POST request using axios
             const response = await axios.post('https://zeelogic.in/census/save_data.php', formData, {
@@ -265,6 +336,7 @@ const Form4 = (props) => {
 
             // Check for success or error
             if (response.status === 200) {
+                setLoader(false)
                 props.navigation.navigate('AlldataHistory')
                 console.log(response?.data, 'AlldataHistoryAlldataHistoryAlldataHistoryAlldataHistory');
 
@@ -272,9 +344,10 @@ const Form4 = (props) => {
                 Alert.alert('Error', response.data?.message || 'Something went wrong');
             }
         } catch (error) {
+            setLoader(false)
             Alert.alert('Error', 'Failed to send data: ' + error.message);
         }
-    };
+    };/
     return (
         <KeyboardAwareScrollView
             style={{ flex: 1, alignSelf: 'center' }}
@@ -821,6 +894,7 @@ const Form4 = (props) => {
 
 
             </View>
+            <SpinningLoader loader={Loader} />  
         </KeyboardAwareScrollView>
     );
 };

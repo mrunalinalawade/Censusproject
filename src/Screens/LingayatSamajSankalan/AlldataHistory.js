@@ -39,7 +39,7 @@ const AlldataHistory = (props) => {
 
       // Check if the status is 'success'
       if (response?.data?.status === "success") {
-        console.log("Data saved successfully!");
+        console.log("");
         setLoader(false);
         // Extract the actual data from the response
         const allData = response?.data?.data;
