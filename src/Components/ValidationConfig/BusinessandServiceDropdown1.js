@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import { WIDTH } from '../Helpers/Dimensions';
-import FONTS from '../assets/Fonts';
-import COLORS from '../assets/colors/Colors';
+import FONTS from '../../assets/Fonts';
+// import { WIDTH } from '../Helpers/Dimensions';
+// import FONTS from '../assets/Fonts';
 
 
-const BusinessandServiceDropdown = (props) => {
+
+const BusinessandServiceDropdown1 = (props) => {
   const data = [
     { label: 'Service', value: '1' },
     { label: 'Business', value: '2' },
@@ -37,11 +38,11 @@ const BusinessandServiceDropdown = (props) => {
       labelField="label"
       valueField="label"
       placeholder="Business Or Service"
-      value={props.Business}
+      value={props.Business1}
       onChange={item => {
-        props.setBusiness(item.label);
-        props.setBusinessError('');
-        console.log(item,"111111");
+        props.setBusiness1(item.label);
+        props.setBusinessError1('');
+        console.log(item,"22222222");
         
       }}
       renderItem={renderItem}
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     paddingVertical: '3%',
     borderRadius: 8,
     backgroundColor: '#DAEAFF',
-    width: WIDTH * 0.9,
+    width: '80%',
     alignSelf: 'center',
     borderWidth: 1,
     borderColor: '#1C57A5',
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   item: {
     borderBottomWidth: 1,
     borderBottomColor: '#F6F6F633',
-    width: WIDTH * 0.8,
+    width:'80%',
     alignSelf: 'center',
     paddingVertical: '2%',
   },
@@ -103,4 +104,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BusinessandServiceDropdown;
+export default BusinessandServiceDropdown1;

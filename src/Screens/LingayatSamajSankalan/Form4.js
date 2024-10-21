@@ -25,6 +25,7 @@ import { RootState } from "../Redux/Store";
 import axios from 'axios'; // Make sure to import axios
 import SpinningLoader from '../../APIConfig/SpinningLoader';
 import { showMessage } from 'react-native-flash-message';
+import BusinessandServiceDropdown1 from '../../Components/ValidationConfig/BusinessandServiceDropdown1';
 
 
 const Form4 = (props) => {
@@ -53,9 +54,9 @@ const Form4 = (props) => {
     const [RelationError, setRelationError] = useState('');
     const [Relation1, setRelation1] = useState('');
     const [RelationError1, setRelationError1] = useState('');
-    const [Business, setBusiness] = useState(null);
+    const [Business, setBusiness] = useState('');
     const [BusinessError, setBusinessError] = useState('');
-    const [Business1, setBusiness1] = useState(null);
+    const [Business1, setBusiness1] = useState('');
     const [BusinessError1, setBusinessError1] = useState('');
     const [showInputField, setShowInputField] = useState(false);
     const [showInputField1, setShowInputField1] = useState(false);
@@ -169,69 +170,69 @@ const Form4 = (props) => {
 
 
         let mobileError = ValidateMobileNo(phone);
-    let mobile1Err = ValidateMobileNo(Mobile1);
-    let maleErr = NoFamily(Male);
-    let emailError = ValidateEmail(Email);
-    let femaleError = NoFamily(Female);
+        let mobile1Err = ValidateMobileNo(Mobile1);
+        let maleErr = NoFamily(Male);
+        let emailError = ValidateEmail(Email);
+        let femaleError = NoFamily(Female);
 
-    // Initialize error state for details array
-    let detailsError = false;
+        // Initialize error state for details array
+        let detailsError = false;
 
-    const updatedDetailsArray = detailsArray.map((details, index) => {
-        let relationError = ValidateFullname(details.Relation1) || '';
-        let fnameError = ValidateFullname(details.FName) || '';
-        let employerError = ValidateFirmemployername(details.employer) || '';
-        let businessError = details.Business === null ? 'Business is required' : '';
-        let phone1Error = ValidateMobileNo(details.phone1) || '';
-        let birthDateError = !details.birthDate ? 'Date of Birth is required' : '';
+        const updatedDetailsArray = detailsArray.map((details, index) => {
+            let relationError = ValidateFullname(details.Relation1) || '';
+            let fnameError = ValidateFullname(details.FName) || '';
+            let employerError = ValidateFirmemployername(details.employer) || '';
+            let businessError = details.Business === null ? 'Business is required' : '';
+            let phone1Error = ValidateMobileNo(details.phone1) || '';
+            let birthDateError = !details.birthDate ? 'Date of Birth is required' : '';
 
-        // Update the error states
-        updateDetails(index, 'RelationError1', relationError);
-        updateDetails(index, 'FNameError', fnameError);
-        updateDetails(index, 'employerError', employerError);
-        updateDetails(index, 'BusinessError', businessError);
-        updateDetails(index, 'phone1Error', phone1Error);
-        updateDetails(index, 'birthDateError', birthDateError);
+            // Update the error states
+            updateDetails(index, 'RelationError1', relationError);
+            updateDetails(index, 'FNameError', fnameError);
+            updateDetails(index, 'employerError', employerError);
+            updateDetails(index, 'BusinessError', businessError);
+            updateDetails(index, 'phone1Error', phone1Error);
+            updateDetails(index, 'birthDateError', birthDateError);
 
-        // If any error exists, mark detailsError as true
-        if (relationError || fnameError || employerError || businessError || phone1Error || birthDateError) {
-            detailsError = true;
-        }
+            // If any error exists, mark detailsError as true
+            if (relationError || fnameError || employerError || businessError || phone1Error || birthDateError) {
+                detailsError = true;
+            }
 
-        return details;
-    });
-
-    // Check for errors in the main fields and in the details array
-    if (
-        mobileError === '' && 
-        mobile1Err === '' && 
-        maleErr === "" && 
-        emailError === "" && 
-        femaleError === "" && 
-        !detailsError
-    ) {
-        // Proceed with submission if no errors
-        submitData();
-    } else {
-        // Set errors for main fields
-        setPhoneError(mobileError);
-        setMobile1Error(mobile1Err);
-        setMaleError(maleErr);
-        setEmailError(emailError);
-        setFemaleError(femaleError);
-
-        // Display the error messages
-        setShowError({
-            Mobile1Error: true,
-            phoneError: true,
-            MaleError: true,
-            EmailError: true,
-            FemaleError: true,
-            // Add the details-related error flags here if needed
+            return details;
         });
 
-        Alert.alert('Error', 'Please fix the validation errors before submitting');
-    }
+        // Check for errors in the main fields and in the details array
+        if (
+            mobileError === '' &&
+            mobile1Err === '' &&
+            maleErr === "" &&
+            emailError === "" &&
+            femaleError === "" &&
+            !detailsError
+        ) {
+            // Proceed with submission if no errors
+            submitData();
+        } else {
+            // Set errors for main fields
+            setPhoneError(mobileError);
+            setMobile1Error(mobile1Err);
+            setMaleError(maleErr);
+            setEmailError(emailError);
+            setFemaleError(femaleError);
+
+            // Display the error messages
+            setShowError({
+                Mobile1Error: true,
+                phoneError: true,
+                MaleError: true,
+                EmailError: true,
+                FemaleError: true,
+                // Add the details-related error flags here if needed
+            });
+
+            Alert.alert('Error', 'Please fix the validation errors before submitting');
+        }
     };
 
 
@@ -276,63 +277,151 @@ const Form4 = (props) => {
         setDetailsArray1(updatedDetails1);
     };
 
-    
 
-    const [formData, setFormData] = useState({
-        first_name:formData1?.FName,
-        middle_name: formData1?.MName,
-        surname:formData1?.SName,
-        gender: formData1?.Gender,
-        dob: formData1?.birthDate,
-        sub_caste: formData1?.Subcast,
-        address_line1: formData2?.Address,
-        address_line2: formData2?.Address1,
-        city: formData2?.City,
-        taluka: formData2?.Taluka,
-        district:formData2?.District,
-        state: formData2?.State,
-        pincode: formData2?.Pincode,
-        business_or_service: formData3?.Business, 
-        firm_or_employer:  formData3?.employer,
-        designation: formData3?.organisation,
-        mobile1: phone, 
-        mobile2: Mobile1,
-        email_address:Email,
-        no_of_family_members_male: Male,
-        no_of_family_members_female:Female,
-        family_members: [
-            {
-                full_name: FName,
-                dob: birthDate,
-                business_or_service: Business,
-                firm_or_employer:employer,
-                mobile_no:phone1,
-                relation: Relation1
-            },
-            {
-                full_name:FName1,
-                dob:birthDate1,
-                business_or_service: Business1,
-                firm_or_employer: employer1,
-                mobile_no:phone11,
-                relation:Relation
 
-            }
-        ]
-    });
-  
+    // const [formData, setFormData] = useState({
+    //     first_name:formData1?.FName,
+    //     middle_name: formData1?.MName,
+    //     surname:formData1?.SName,
+    //     gender: formData1?.Gender,
+    //     dob: formData1?.birthDate,
+    //     sub_caste: formData1?.Subcast,
+    //     address_line1: formData2?.Address,
+    //     address_line2: formData2?.Address1,
+    //     city: formData2?.City,
+    //     taluka: formData2?.Taluka,
+    //     district:formData2?.District,
+    //     state: formData2?.State,
+    //     pincode: formData2?.Pincode,
+    //     business_or_service: formData3?.Business, 
+    //     firm_or_employer:  formData3?.employer,
+    //     designation: formData3?.organisation,
+    //     mobile1: phone, 
+    //     mobile2: Mobile1,
+    //     email_address:Email,
+    //     no_of_family_members_male: Male,
+    //     no_of_family_members_female:Female,
+    //     family_members: [
+    //         {
+    //             full_name: FName,
+    //             dob: birthDate,
+    //             business_or_service: Business,
+    //             firm_or_employer:employer,
+    //             mobile_no:phone1,
+    //             relation: Relation1
+    //         },
+    //         {
+    //             full_name:FName1,
+    //             dob:birthDate1,
+    //             business_or_service: Business1,
+    //             firm_or_employer: employer1,
+    //             mobile_no:phone11,
+    //             relation:Relation
 
-    console.log(formData ,"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
+    //         }
+    //     ]
+    // });/
+
+
+    // console.log(formData, "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
 
     const submitData = async () => {
         setLoader(true)
         try {
             // Make a POST request using axios
-            const response = await axios.post('https://zeelogic.in/census/save_data.php', formData, {
+            const response = await axios.post('https://zeelogic.in/census/save_data.php', {
+                data: {
+
+                    first_name: formData1?.FName,
+                    middle_name: formData1?.MName,
+                    surname: formData1?.SName,
+                    gender: formData1?.Gender,
+                    dob: formData1?.birthDate,
+                    sub_caste: formData1?.Subcast,
+                    address_line1: formData2?.Address,
+                    address_line2: formData2?.Address1,
+                    city: formData2?.City,
+                    taluka: formData2?.Taluka,
+                    district: formData2?.District,
+                    state: formData2?.State,
+                    pincode: formData2?.Pincode,
+                    business_or_service: formData3?.Business,
+                    firm_or_employer: formData3?.employer,
+                    designation: formData3?.organisation,
+                    mobile1: phone,
+                    mobile2: Mobile1,
+                    email_address: Email,
+                    no_of_family_members_male: Male,
+                    no_of_family_members_female: Female,
+                    family_members: [
+                        {
+                            full_name: FName,
+                            dob: birthDate,
+                            business_or_service: Business,
+                            firm_or_employer: employer,
+                            mobile_no: phone1,
+                            relation: Relation1
+                        },
+                        {
+                            full_name: FName1,
+                            dob: birthDate1,
+                            business_or_service: Business1,
+                            firm_or_employer: employer1,
+                            mobile_no: phone11,
+                            relation: Relation
+
+                        }
+                    ]
+
+                },
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
+console.log(
+    "first_name", formData1?.FName,
+    "middle_name:" ,formData1?.MName,
+   " surname:", formData1?.SName,
+    "gender:", formData1?.Gender,
+    "dob:", formData1?.birthDate,
+   " sub_caste:", formData1?.Subcast,
+    "address_line1:", formData2?.Address,
+   " address_line2:", formData2?.Address1,
+    "city:", formData2?.City,
+    "taluka:", formData2?.Taluka,
+    "district:", formData2?.District,
+   " state:", formData2?.State,
+   " pincode:", formData2?.Pincode,
+   " business_or_service:", formData3?.Business,
+    "firm_or_employer:", formData3?.employer,
+   " designation:", formData3?.organisation,
+  " mobile1:", phone,
+   "mobile2:", Mobile1,
+  " email_address:", Email,
+   "no_of_family_members_male:", Male,
+   "no_of_family_members_female:", Female,
+ 
+          " full_name:", FName,
+          " dob:", birthDate,
+           "business_or_service:", Business,
+         "  firm_or_employer:", employer,
+          " mobile_no:", phone1,
+           "relation: ",Relation1,
+    
+          " full_name:", FName1,
+          " dob:", birthDate1,
+           "business_or_service: ",Business1,
+           "firm_or_employer:", employer1,
+          " mobile_no:", phone11,
+           "relation:", Relation,
+
+     
+
+
+            "dafagfjsdhgkfjdhl;gfjlgh"
+
+)
+   
 
             // Check for success or error
             if (response.status === 200) {
@@ -347,7 +436,7 @@ const Form4 = (props) => {
             setLoader(false)
             Alert.alert('Error', 'Failed to send data: ' + error.message);
         }
-    };/
+    };
     return (
         <KeyboardAwareScrollView
             style={{ flex: 1, alignSelf: 'center' }}
@@ -796,12 +885,12 @@ const Form4 = (props) => {
                                     {BusinessError1 && Business1 === null && (
                                         <Text style={styles.Errorstyle1}>{BusinessError1}</Text>
                                     )} */}
-                                    <BusinessandServiceDropdown
-                                        setBusiness={(value) => updateDetails1(index, 'Business1', value)}
-                                        Business={details1.Business1}
-                                        setBusinessError={(error) => updateDetails1(index, 'BusinessError1', error)}
+                                    <BusinessandServiceDropdown1
+                                        setBusiness1={(value) => updateDetails1(index, 'Business1', value)}
+                                        Business1={details1.Business1}
+                                        setBusinessError1={(error) => updateDetails1(index, 'BusinessError1', error)}
                                     />
-                                    {details1.BusinessError1 && details1.Business === null && (
+                                    {details1.BusinessError1 && details1.Business1 === null && (
                                         <Text style={styles.Errorstyle1}>{details1.BusinessError1}</Text>
                                     )}
 
@@ -894,7 +983,7 @@ const Form4 = (props) => {
 
 
             </View>
-            <SpinningLoader loader={Loader} />  
+            <SpinningLoader loader={Loader} />
         </KeyboardAwareScrollView>
     );
 };
