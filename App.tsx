@@ -3,6 +3,8 @@ import {NavigationContainer} from '@react-navigation/native';
 import RouteNavigation from './src/Navigations/RouteNavigation';
 import { Provider } from 'react-redux';
 import { store } from './src/Components/Redux/Store';
+// import InternetIndicator from './src/assets/InternetIndicator';+
+
 
 
 const App = () => {
@@ -12,6 +14,7 @@ const App = () => {
       <Provider store={store}>
         <RouteNavigation />
         </Provider>
+        {/* <InternetIndicator /> */}
       </NavigationContainer>
     </>
   );

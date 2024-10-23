@@ -328,7 +328,27 @@ const Form4 = (props) => {
     const submitData = async () => {
         setLoader(true)
         try {
-            // Make a POST request using axios
+
+            const familyMembersData = [
+                ...detailsArray.map(details => ({
+                    full_name: details?.FName || '',
+                    dob: details?.birthDate || '',
+                    business_or_service: details?.Business || '',
+                    firm_or_employer: details?.employer || '',
+                    mobile_no: details?.phone1 || '',
+                    relation: details?.Relation1 || ''
+                })),
+                ...detailsArray1.map(details1 => ({
+                    full_name: details1?.FName1 || '',
+                    dob: details1?.birthDate1 || '',
+                    business_or_service: details1?.Business1 || '',
+                    firm_or_employer: details1?.employer1 || '',
+                    mobile_no: details1?.phone11 || '',
+                    relation: details1?.Relation || ''
+                }))
+            ];
+    
+            console.log('Family Members Data:', familyMembersData);
             const response = await axios.post('https://zeelogic.in/census/save_data.php', {
                 data: {
 
@@ -345,83 +365,85 @@ const Form4 = (props) => {
                     district: formData2?.District,
                     state: formData2?.State,
                     pincode: formData2?.Pincode,
-                    business_or_service: formData3?.Business,
-                    firm_or_employer: formData3?.employer,
-                    designation: formData3?.organisation,
+                    business_or_service:formData3?.Business2,
+                    firm_or_employer:formData3?.employer,
+                    designation:formData3?.organisation,
                     mobile1: phone,
                     mobile2: Mobile1,
                     email_address: Email,
                     no_of_family_members_male: Male,
                     no_of_family_members_female: Female,
-                    family_members: [
-                        {
-                            full_name: FName,
-                            dob: birthDate,
-                            business_or_service: Business,
-                            firm_or_employer: employer,
-                            mobile_no: phone1,
-                            relation: Relation1
-                        },
-                        {
-                            full_name: FName1,
-                            dob: birthDate1,
-                            business_or_service: Business1,
-                            firm_or_employer: employer1,
-                            mobile_no: phone11,
-                            relation: Relation
+                    // family_members: [
+                    //     {
+                    //         full_name:details?.FName,
+                    //         dob:details?.birthDate,
+                    //         business_or_service:details?.Business,
+                    //         firm_or_employer:details?.employer,
+                    //         mobile_no:details?.phone1,
+                    //         relation:details?.Relation1
+                    //     },
+                    //     {
+                    //         full_name:details1?.Name1,
+                    //         dob: details1?.birthDate1,
+                    //         business_or_service:details1?.Business1,
+                    //         firm_or_employer: details1?.employer1,
+                    //         mobile_no: details1?.phone11,
+                    //         relation:details1?.Relation
 
-                        }
-                    ]
+                    //     }
+                    // ]
+                    family_members: familyMembersData,
 
                 },
                 headers: {
                     'Content-Type': 'application/json',
                 }
             });
-console.log(
-    "first_name", formData1?.FName,
-    "middle_name:" ,formData1?.MName,
-   " surname:", formData1?.SName,
-    "gender:", formData1?.Gender,
-    "dob:", formData1?.birthDate,
-   " sub_caste:", formData1?.Subcast,
-    "address_line1:", formData2?.Address,
-   " address_line2:", formData2?.Address1,
-    "city:", formData2?.City,
-    "taluka:", formData2?.Taluka,
-    "district:", formData2?.District,
-   " state:", formData2?.State,
-   " pincode:", formData2?.Pincode,
-   " business_or_service:", formData3?.Business,
-    "firm_or_employer:", formData3?.employer,
-   " designation:", formData3?.organisation,
-  " mobile1:", phone,
-   "mobile2:", Mobile1,
-  " email_address:", Email,
-   "no_of_family_members_male:", Male,
-   "no_of_family_members_female:", Female,
- 
-          " full_name:", FName,
-          " dob:", birthDate,
-           "business_or_service:", Business,
-         "  firm_or_employer:", employer,
-          " mobile_no:", phone1,
-           "relation: ",Relation1,
-    
-          " full_name:", FName1,
-          " dob:", birthDate1,
-           "business_or_service: ",Business1,
-           "firm_or_employer:", employer1,
-          " mobile_no:", phone11,
-           "relation:", Relation,
+            console.log(formData3?.Business2,'1AAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
+            console.log(
+                "first_name", formData1?.FName,
+                "middle_name:", formData1?.MName,
+                " surname:", formData1?.SName,
+                "gender:", formData1?.Gender,
+                "dob:", formData1?.birthDate,
+                " sub_caste:", formData1?.Subcast,
+                "address_line1:", formData2?.Address,
+                " address_line2:", formData2?.Address1,
+                "city:", formData2?.City,
+                "taluka:", formData2?.Taluka,
+                "district:", formData2?.District,
+                " state:", formData2?.State,
+                " pincode:", formData2?.Pincode,
+                " business_or_service:", formData3?.Business2,
+                "firm_or_employer:", formData3?.employer,
+                " designation:", formData3?.organisation,
+                " mobile1:", phone,
+                "mobile2:", Mobile1,
+                " email_address:", Email,
+                "no_of_family_members_male:", Male,
+                "no_of_family_members_female:", Female,
 
-     
+                // " full_name:",details?.FName,
+                // " dob:",details?.birthDate,
+                // "business_or_service:", details?.Business,
+                // "  firm_or_employer:", details?.employer,
+                // " mobile_no:", details?.phone1,
+                // "relation: ", details?.Relation1,
+
+                // " full_name:", details1?.FName1,
+                // " dob:",details1?.birthDate1,
+                // "business_or_service: ",details1?.Business1,
+                // "firm_or_employer:",details1?.employer1,
+                // " mobile_no:", details1?.phone11,
+                // "relation:", details1?.Relation,
 
 
-            "dafagfjsdhgkfjdhl;gfjlgh"
 
-)
-   
+
+                "dafagfjsdhgkfjdhl;gfjlgh"
+
+            )
+
 
             // Check for success or error
             if (response.status === 200) {

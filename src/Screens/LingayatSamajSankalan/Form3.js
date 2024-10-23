@@ -16,9 +16,10 @@ import FONTS from '../../assets/Fonts';
 import Inputfield from '../../Components/Inputfield';
 import GenderDropDown from '../../Components/GenderDropDown';
 import { ValidateDesignation, ValidateFirmemployername, ValidateFullname } from '../../Components/ValidationConfig/Validations';
-import BusinessandServiceDropdown from '../../Components/BusinessandServiceDropdown';
+// import BusinessandServiceDropdown from '../../Components/BusinessandServiceDropdown';
 import { useDispatch } from 'react-redux';
 import { setUserData3 } from '../../Components/Redux/UserDetails';
+import BusinessandServiceDropdown2 from '../../Components/BusinessandServiceDropdown2';
 
 
 
@@ -28,14 +29,14 @@ const Form3 = (props) => {
   const [organisation, setorganisation] = useState('');
   const [organisationError, setorganisationError] = useState('');
 
-  const [Business, setBusiness] = useState(null);
-  const [BusinessError, setBusinessError] = useState('');
+  const [Business2, setBusiness2] = useState(null);
+  const [BusinessError2, setBusinessError2] = useState('');
 
 
   const [ShowError, setShowError] = useState({
     employerError: false,
     organisationError: false,
-    BusinessError: false,
+    BusinessError2: false,
   });
 
 
@@ -47,20 +48,20 @@ const Form3 = (props) => {
 
 
 
-    if (employError == '' && organisationErr == '' && Business !== null ) {
-      const formData3 = { employer, organisation, Business };
+    if (employError == '' && organisationErr == '' && Business2 !== null ) {
+      const formData3 = { employer, organisation, Business2 };
       dispatch(setUserData3(formData3));
       props.navigation.navigate('Form4')
 
     } else {
       setemployerError(employError);
       setorganisationError(organisationErr);
-      setBusinessError("Please select a Business or Service");
+      setBusinessError2("Please select a Business or Service");
 
       setShowError({
         employerError: true,
         organisationError: true,
-        BusinessError: true,
+        BusinessError2: true,
       });
     }
 
@@ -86,13 +87,13 @@ const Form3 = (props) => {
           <Text style={styles.starStyle}>*</Text>
         </Text>
         <View style={{ marginTop: '3.3%' }}>
-          <BusinessandServiceDropdown
-            setBusiness={setBusiness}
-            Business={Business}
-            setBusinessError={setBusinessError}
+          <BusinessandServiceDropdown2
+            setBusiness2={setBusiness2}
+            Business2={Business2}
+            setBusinessError2={setBusinessError2}
           />
-          {BusinessError && Business === null && (
-            <Text style={styles.Errorstyle1}>{BusinessError}</Text>
+          {BusinessError2 && Business2 === null && (
+            <Text style={styles.Errorstyle1}>{BusinessError2}</Text>
           )}
         </View>
 
